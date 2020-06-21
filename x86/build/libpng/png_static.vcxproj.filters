@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\png.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngerror.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngget.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngmem.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngpread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngrio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngrtran.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngrutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngtrans.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngwio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngwrite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngwtran.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngwutil.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\png.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\libpng\pnglibconf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngpriv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngdebug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pnginfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\pngstruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\lpng1637\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{FCADE3BF-8131-35C0-8BF3-23716A686354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{44736602-165B-3290-9AD6-727454A7EAE9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

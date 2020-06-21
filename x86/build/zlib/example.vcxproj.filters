@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\momo8\Documents\Git\MozjpegGUI\zlib\test\example.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\zlib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F27B22B4-1FD3-30AF-A0A8-B4B192A1F235}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

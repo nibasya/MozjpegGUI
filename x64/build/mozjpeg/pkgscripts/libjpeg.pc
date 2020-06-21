@@ -1,0 +1,10 @@
+prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
+exec_prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
+libdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/lib
+includedir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/include
+
+Name: libjpeg
+Description: A SIMD-accelerated JPEG codec that provides the libjpeg API
+Version: 4.0.0
+Libs: -L${libdir} -ljpeg
+Cflags: -I${includedir}

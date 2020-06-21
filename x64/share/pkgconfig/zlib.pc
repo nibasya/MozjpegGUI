@@ -1,0 +1,13 @@
+prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
+exec_prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
+libdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/lib
+sharedlibdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/lib
+includedir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.11
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

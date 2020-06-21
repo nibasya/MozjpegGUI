@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\be492a4082dfbbff289d6bc9bc4ea11a\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0640C114-4FE4-33B4-B614-ACD404E3B58C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

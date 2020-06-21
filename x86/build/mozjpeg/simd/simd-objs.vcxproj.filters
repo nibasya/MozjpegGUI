@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jsimdcpu.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctflt-3dn.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctflt-3dn.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquant-3dn.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jccolor-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcgray-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcsample-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdcolor-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdmerge-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdsample-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctfst-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctint-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctfst-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctint-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctred-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquant-mmx.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctflt-sse.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctflt-sse.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquant-sse.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jccolor-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcgray-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jchuff-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcphuff-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcsample-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdcolor-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdmerge-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdsample-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctfst-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctint-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctflt-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctfst-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctint-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctred-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquantf-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquanti-sse2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jccolor-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcgray-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jcsample-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdcolor-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdmerge-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jdsample-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jfdctint-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jidctint-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\de574a74a6982156cbf29d4877d25fae\jquanti-avx2.asm.obj.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\6f4f9274ebdb96538ae14f09d0bfb485\simd-objs.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\simd\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\simd\CMakeFiles\simd-objs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0640C114-4FE4-33B4-B614-ACD404E3B58C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

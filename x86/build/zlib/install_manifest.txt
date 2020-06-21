@@ -1,0 +1,7 @@
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib/zlibd.lib
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/bin/zlibd.dll
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib/zlibstaticd.lib
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/zconf.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/zlib.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/share/man/man3/zlib.3
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/pkgconfig/zlib.pc

@@ -1,0 +1,12 @@
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib/libpng16_staticd.lib
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/png.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/pngconf.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/pnglibconf.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/libpng16/png.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/libpng16/pngconf.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include/libpng16/pnglibconf.h
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/share/man/man3/libpng.3
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/share/man/man3/libpngpf.3
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/share/man/man5/png.5
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib/libpng/libpng16.cmake
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib/libpng/libpng16-debug.cmake

@@ -1,0 +1,10 @@
+prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x86
+exec_prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x86
+libdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x86/lib
+includedir=C:/Users/momo8/Documents/Git/MozjpegGUI/x86/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 4.0.0
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}

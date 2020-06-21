@@ -1,0 +1,8 @@
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/zlib.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/zlibstatic.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/example.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/minigzip.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/INSTALL.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/RUN_TESTS.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/ALL_BUILD.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/zlib/CMakeFiles/ZERO_CHECK.dir

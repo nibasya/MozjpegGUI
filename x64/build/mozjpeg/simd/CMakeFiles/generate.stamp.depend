@@ -1,0 +1,6 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.16/Modules/CMakeASMInformation.cmake
+C:/Program Files/CMake/share/cmake-3.16/Modules/CMakeASM_NASMInformation.cmake
+C:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg/simd/CMakeLists.txt
+C:/Users/momo8/Documents/Git/MozjpegGUI/x64/build/mozjpeg/CMakeFiles/3.16.3/CMakeASM_NASMCompiler.cmake
+C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.props.in

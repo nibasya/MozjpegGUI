@@ -1,0 +1,6 @@
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/INSTALL.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/RUN_TESTS.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/genfiles.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/png_static.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/ALL_BUILD.dir
+C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/libpng/CMakeFiles/ZERO_CHECK.dir

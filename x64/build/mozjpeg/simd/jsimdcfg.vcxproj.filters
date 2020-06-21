@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x64\build\mozjpeg\CMakeFiles\7a61151f95f7d9a49761dc69c4c306c2\jsimdcfg.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\simd\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x64\build\mozjpeg\simd\CMakeFiles\jsimdcfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{51B6DD61-1340-3B2B-A864-DAF5644EE8E9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

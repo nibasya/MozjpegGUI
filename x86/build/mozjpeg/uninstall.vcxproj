@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{79501D5F-AADB-3F15-B18C-74280F8841FC}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>uninstall</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\uninstall.dir\nasm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\34190d4f556372e261294e7a205f9985\uninstall.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P cmake_uninstall.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\uninstall</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P cmake_uninstall.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\uninstall</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P cmake_uninstall.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\uninstall</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -P cmake_uninstall.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\uninstall</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg -BC:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg --check-stamp-file C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\SelectLibraryConfigurations.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\BuildPackages.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\GNUInstallDirs.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\cmake_uninstall.cmake.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\jconfigint.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\installer.nsi.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libjpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libturbojpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\maketarball.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjbenchtest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjexampletest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\win\jconfig.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeRCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg -BC:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg --check-stamp-file C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\SelectLibraryConfigurations.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\BuildPackages.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\GNUInstallDirs.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\cmake_uninstall.cmake.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\jconfigint.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\installer.nsi.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libjpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libturbojpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\maketarball.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjbenchtest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjexampletest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\win\jconfig.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeRCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg -BC:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg --check-stamp-file C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\SelectLibraryConfigurations.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\BuildPackages.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\GNUInstallDirs.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\cmake_uninstall.cmake.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\jconfigint.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\installer.nsi.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libjpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libturbojpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\maketarball.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjbenchtest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjexampletest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\win\jconfig.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeRCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/momo8/Documents/Git/MozjpegGUI/mozjpeg -BC:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg --check-stamp-file C:/Users/momo8/Documents/Git/MozjpegGUI/x86/build/mozjpeg/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckIncludeFiles.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPNG.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\FindZLIB.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.16\Modules\SelectLibraryConfigurations.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\BuildPackages.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\GNUInstallDirs.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\cmakescripts\cmake_uninstall.cmake.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\jconfigint.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\installer.nsi.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libjpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\libturbojpeg.pc.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\release\maketarball.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjbenchtest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\tjexampletest.in;C:\Users\momo8\Documents\Git\MozjpegGUI\mozjpeg\win\jconfig.h.in;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeRCCompiler.cmake;C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\3.16.3\CMakeSystem.cmake;C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.props.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\momo8\Documents\Git\MozjpegGUI\x86\build\mozjpeg\ZERO_CHECK.vcxproj">
+      <Project>{69FF441F-21CF-36ED-BB7B-D53F2737D0BD}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="C:\Program Files\CMake\share\cmake-3.16\Templates\MSBuild\nasm.targets" />
+  </ImportGroup>
+</Project>
