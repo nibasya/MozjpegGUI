@@ -21,6 +21,7 @@ private:
 	BYTE* m_OutData;
 	LONGLONG m_OutSize;
 	UINT Main();
+	void Pause();
 public:
 	bool ReadFile();
 	bool Convert();

@@ -533,6 +533,11 @@ start_input_bmp(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
     return;
   }
 
+  if (biHeight < 0) {
+      biHeight = -biHeight;   // The bmp is top-down format
+      source->use_inversion_array = FALSE;
+  }
+
   if (biWidth <= 0 || biHeight <= 0 || biWidth > 0x7fffffffL || biHeight > 0x7fffffffL)
     ERREXIT(cinfo, JERR_BMP_EMPTY);
   if (biPlanes != 1)

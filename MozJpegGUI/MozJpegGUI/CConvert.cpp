@@ -102,6 +102,21 @@ UINT CConvert::Main()
 			m_OutData = NULL;
 		}
 	}
+	catch (CJpegException e) {
+		m_pParent->m_Paused = true;
+		CString str;
+		str.Format(_T("Error code %d: %s"), e.e, e.str);
+		MessageBox(m_pParent->m_hWnd, str, _T("Error"), MB_OK);
+		if (m_InData) {
+			free(m_InData);
+			m_InData = NULL;
+		}
+		if (m_OutData) {
+			free(m_OutData);
+			m_OutData = NULL;
+		}
+		m_pParent->Abort();
+	}
 	m_pParent->ThreadEnd(m_pThread);
 	return 0;
 }
@@ -178,6 +193,7 @@ bool CConvert::ReadFile()
 		DWORD readfilesize;
 		LONGLONG readPos = 0;
 		while (readPos < m_InSize) {
+			Pause();
 			DWORD sizePerOneRead = (m_InSize - readPos) > DWORD_MAX ? DWORD_MAX : static_cast<DWORD>(m_InSize - readPos);
 			if (::ReadFile(hFileRead, m_InData + readPos, sizePerOneRead, &readfilesize, NULL) == FALSE || readfilesize != sizePerOneRead) {
 				_RPTFT0(_T("Failed to read input file\n"));
@@ -312,6 +328,7 @@ bool CConvert::WriteFile()
 		DWORD writefilesize=0;
 		LONGLONG writePos=0;
 		do {
+			Pause();
 			DWORD writeSize = (m_OutSize - writePos) > DWORD_MAX ? DWORD_MAX : static_cast<DWORD>(m_OutSize - writePos);
 			if (::WriteFile(hFileWrite, m_OutData + writePos, writeSize, &writefilesize, NULL) != TRUE) {
 				_RPTFT0(_T("Failed to write output file\n"));
@@ -430,5 +447,15 @@ void CConvert::CreateArgs(int* argc, void*** argv)
 		CStringA aBuff = CT2A(vec[i]);
 		(*argv)[i] = new char[aBuff.GetLength() + 1];
 		strcpy_s(static_cast<char *>((*argv)[i]), aBuff.GetLength()+1, aBuff);
+	}
+}
+
+void CConvert::Pause()
+{
+	while (m_pParent->m_Paused) {
+		Sleep(500);
+		if (WaitForSingleObject(m_pParent->m_SyncAbort.m_hObject, 0) == WAIT_OBJECT_0) {
+			break;
+		}
 	}
 }
