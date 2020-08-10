@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.0
-    File name: MozJpegGUI_1_0_x64_Global.zip
+      Version: 1.1
+    File name: MozJpegGUI_1_1_x64_Global.zip
        Author: Dona
   Verified OS: Windows10 Professional
    Minimum OS: Windows10 and later
@@ -44,6 +44,9 @@ Copyright(c) 2020 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push ÅgClearÅh button, and start again from b).
 
 6. History
+ Ver. 1.1:
+  1. The software now shows error message instead of shutting down itself when an error has happened in mozjpeg.
+  2. The software now can read .BMP files which is stored in top-down style; which is very rare.
  Ver. 1.0:
    Published.
 

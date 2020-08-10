@@ -164,6 +164,9 @@
   <ItemGroup>
     <ResourceCompile Include="MozJpegGUIJPN.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\MozJpegGUI\res\MozJpegGUI.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

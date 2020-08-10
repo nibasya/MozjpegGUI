@@ -152,6 +152,9 @@
   <ItemGroup>
     <ClInclude Include="..\MozJpegGUI\resource.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\MozJpegGUI\res\MozJpegGUI.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
