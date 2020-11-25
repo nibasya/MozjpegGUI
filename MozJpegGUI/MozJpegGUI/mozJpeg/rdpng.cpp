@@ -158,7 +158,7 @@ start_input_png (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
             marker->next = NULL;
             marker->marker = JPEG_APP0+2;
             marker->original_length = 0;
-            marker->data_length = datalen;
+            marker->data_length = (unsigned int)datalen;
             marker->data = dataptr;
             source->pub.marker_list = marker;
         } else {
