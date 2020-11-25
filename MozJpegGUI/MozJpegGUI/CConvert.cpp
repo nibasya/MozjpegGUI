@@ -21,7 +21,7 @@ CConvert::CConvert(CProgressDlg* pParent, CString& fileName, CString& outDir, CS
 	TCHAR* buff = new TCHAR[len];
 	_tcscpy_s(buff, len, fileName);
 	PathCchRemoveExtension(buff, len);
-	PathCchAddExtension(buff, len, _T(".jpg"));
+	_tcscat_s(buff, len, _T(".jpg"));
 
 	CString name = PathFindFileName(buff);
 	size_t outlen = len + outDir.GetLength();

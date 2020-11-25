@@ -31,3 +31,5 @@ Thumbs.db
 [Tt]est[Rr]esults/
 _UpgradeReport_Files/
 _ReSharper.*/
+*.db-shm
+*.db-wal
