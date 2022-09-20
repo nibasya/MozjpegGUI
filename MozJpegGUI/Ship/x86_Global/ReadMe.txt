@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.2
-    File name: MozJpegGUI_1_2_x86_Global.zip
+      Version: 1.3
+    File name: MozJpegGUI_1_3_x86_Global.zip
        Author: Dona
   Verified OS: Windows10 Professional
    Minimum OS: Windows10 and later
@@ -10,7 +10,7 @@ Software type: Freeware
  Reproduction: Prohibited.
        e-mail: nibasha@hotmail.com
 ==========================================================================
-Copyright(c) 2020 Dona All rights reserved. 
+Copyright(c) 2022 Dona All rights reserved. 
 
 1. What can this software do?
  This software is a high-speed image-file-to-jpeg-converter which can handle massive number of image files with high-quality and high-compression rate. Main point of the software is its multi-thread capability. When you are converting several hundreds image files, this makes a big difference to other software which converts one file at a time.
@@ -43,6 +43,9 @@ Copyright(c) 2020 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push ÅgClearÅh button, and start again from b).
 
 6. History
+ Ver. 1.3:
+  1. Added functionality to save the images into the save folder as the original one.
+  2. Fixed issue: Some texts in the GUI was hidden.
  Ver. 1.2:
   1. Fixed bug: If filename includes empty space, the software failes to write in correct filename
  Ver. 1.1:

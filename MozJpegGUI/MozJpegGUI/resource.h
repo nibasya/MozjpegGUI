@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ で生成されたインクルード ファイル。
-// C:\Users\momo8\Documents\Git\MozjpegGUI\MozJpegGUI\MozJpegGUIENU\MozJpegGUIENU.rc で使用
+// MozJpegGUI.rc で使用
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -57,6 +57,7 @@
 #define IDS_COPY_IF_SMALLER             147
 #define IDS_MSG_SELECT_FOLDER_TO_LOAD_IMAGE 148
 #define IDS_ERR_NOT_VALID_FOLDER        149
+#define IDS_SAVE_TO_ORIGINAL_FOLDER     150
 #define IDC_BUTTON_ADDFOLDER            1000
 #define IDC_BUTTON_CONVERT              1001
 #define IDC_LIST_FILELIST               1002
@@ -101,7 +102,7 @@
 #define IDC_LIBPNG_VERSION              1044
 #define IDC_ZLIB_VERSION                1045
 #define IDC_MOZJPEG_VERSION             1046
-#define IDC_COMBO2                      1048
+#define IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER 1047
 
 // Next default values for new objects
 // 

@@ -8,6 +8,7 @@
 #include "RPTT.h"
 #include "afxdialogex.h"
 #include "CProgressDlg.h"
+#include <PathCch.h>
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -94,7 +95,15 @@ bool CProgressDlg::AddThread()
 		}
 		return true;
 	}
-	CConvert* pConv = new CConvert(this, m_FileList[m_StartCount], m_OutputDir, m_Options);
+
+	CString outputDir = m_OutputDir;
+	if (m_fSaveToOriginalDir) {
+		outputDir = m_FileList[m_StartCount];
+		PathCchRemoveFileSpec(outputDir.GetBuffer(), outputDir.GetAllocLength());
+		outputDir.ReleaseBuffer();
+	}
+
+	CConvert* pConv = new CConvert(this, m_FileList[m_StartCount], outputDir, m_Options);
 	_RPTTN(_T("Starting %s\n"), m_FileList[m_StartCount]);
 	CWinThread* pThread;
 	pThread = AfxBeginThread(CConvert::MainThread, pConv);

@@ -85,4 +85,7 @@ public:
 	// Selected setting number in m_CtrlComboSetting
 	int m_SelectedSetting;
 	afx_msg void OnCbnDropdownComboSetting();
+	CButton m_CtrlCheckSaveToOriginalFolder;
+	afx_msg void OnBnClickedCheckSaveToOriginalFolder();
+	CButton m_CtrlButtonSaveTo;
 };

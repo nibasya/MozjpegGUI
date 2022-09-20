@@ -69,7 +69,7 @@ public:
 
 	// List of files to be saved
 	std::vector<CString> m_FileList;
-	// Output Folder
+	// Output Folder. This is ignored if m_fSaveToOriginalDir is true
 	CString m_OutputDir;
 	// Saves the file to the same folder as original input if true
 	bool m_fSaveToOriginalDir;

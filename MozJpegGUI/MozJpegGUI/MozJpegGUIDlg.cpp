@@ -52,6 +52,8 @@ void CMozJpegGUIDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_SAVETO, m_CtrlEditSaveTo);
 	DDX_Control(pDX, IDC_CHECK_OVERWRITE, m_CtrlCheckOverwrite);
 	DDX_Control(pDX, IDC_CHECK_COPY_IF_SMALLER, m_CtrlCheckCopyIfSmaller);
+	DDX_Control(pDX, IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER, m_CtrlCheckSaveToOriginalFolder);
+	DDX_Control(pDX, IDC_BUTTON_SAVETO, m_CtrlButtonSaveTo);
 }
 
 BEGIN_MESSAGE_MAP(CMozJpegGUIDlg, CDialogEx)
@@ -69,6 +71,7 @@ BEGIN_MESSAGE_MAP(CMozJpegGUIDlg, CDialogEx)
 	ON_WM_CLOSE()
 	ON_CBN_CLOSEUP(IDC_COMBO_SETTING, &CMozJpegGUIDlg::OnCbnCloseupComboSetting)
 	ON_CBN_DROPDOWN(IDC_COMBO_SETTING, &CMozJpegGUIDlg::OnCbnDropdownComboSetting)
+	ON_BN_CLICKED(IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER, &CMozJpegGUIDlg::OnBnClickedCheckSaveToOriginalFolder)
 END_MESSAGE_MAP()
 
 
@@ -473,33 +476,37 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 		return;
 	}
 
+	bool saveToOriginalFolder = m_CtrlCheckSaveToOriginalFolder.GetCheck() == BST_CHECKED;
+
 	CString outputDir;
 	m_CtrlEditSaveTo.GetWindowText(outputDir);
-	if (outputDir.GetLength() == 0) {
-		CString str;
-		if (!str.LoadString(IDS_ERR_SET_SAVE_DIR)) {
-			OutputDebugString(_T("Failed to load resource: IDS_ERR_SET_SAVE_DIR"));
+	if (!saveToOriginalFolder) {
+		if (outputDir.GetLength() == 0) {
+			CString str;
+			if (!str.LoadString(IDS_ERR_SET_SAVE_DIR)) {
+				OutputDebugString(_T("Failed to load resource: IDS_ERR_SET_SAVE_DIR"));
+			}
+			MessageBox(str);
+			return;
 		}
-		MessageBox(str);
-		return;
-	}
-	if (PathIsDirectory(outputDir) == FALSE) {
-		CString str;
-		if (!str.LoadString(IDS_ERR_OUTPUT_DIR_NOT_EXIST)) {
-			OutputDebugString(_T("Failed to load resource: IDS_ERR_OUTPUT_DIR_NOT_EXIST"));
+		if (PathIsDirectory(outputDir) == FALSE) {
+			CString str;
+			if (!str.LoadString(IDS_ERR_OUTPUT_DIR_NOT_EXIST)) {
+				OutputDebugString(_T("Failed to load resource: IDS_ERR_OUTPUT_DIR_NOT_EXIST"));
+			}
+			MessageBox(str);
+			return;
 		}
-		MessageBox(str);
-		return;
+		size_t outLen = static_cast<size_t>(outputDir.GetLength()) + 2;
+		TCHAR* outBuff = new TCHAR[outLen];
+		_tcscpy_s(outBuff, outLen, outputDir);
+		PathCchAddBackslash(outBuff, outLen);
+		outputDir = outBuff;
+		delete[] outBuff;
 	}
 
 	m_CtrlButtonConvert.EnableWindow(FALSE);
 
-	size_t outLen = static_cast<size_t>(outputDir.GetLength()) + 2;
-	TCHAR* outBuff = new TCHAR[outLen];
-	_tcscpy_s(outBuff, outLen, outputDir);
-	PathCchAddBackslash(outBuff, outLen);
-	outputDir = outBuff;
-	delete[] outBuff;
 
 	ASSERT(m_pProgressDlg == NULL);
 	m_pProgressDlg = new CProgressDlg();
@@ -508,6 +515,7 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 	m_pProgressDlg->m_fOverwrite = m_CtrlCheckOverwrite.GetCheck() == BST_CHECKED;
 	m_pProgressDlg->m_Options = CreateOptions();
 	m_pProgressDlg->m_fCopyIfSmaller = m_CtrlCheckCopyIfSmaller.GetCheck() == BST_CHECKED;
+	m_pProgressDlg->m_fSaveToOriginalDir = saveToOriginalFolder;
 
 	SYSTEM_INFO sysInfo;
 	GetNativeSystemInfo(&sysInfo);
@@ -599,6 +607,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingLoad()
 	m_CtrlEditSaveTo.SetWindowText(p->GetProfileString(sec, _T("Output directory"), _T("")));
 	m_CtrlCheckOverwrite.SetCheck(p->GetProfileInt(sec, _T("Overwrite"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	m_CtrlCheckCopyIfSmaller.SetCheck(p->GetProfileInt(sec, _T("Copy file if original is smaller"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
+	m_CtrlCheckSaveToOriginalFolder.SetCheck(p->GetProfileInt(sec, _T("Save to original folder"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
+	OnBnClickedCheckSaveToOriginalFolder();
 	m_CurrentSetting = m_SelectedSetting;
 }
 
@@ -629,6 +639,7 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingSave()
 	p->WriteProfileString(sec, _T("Output directory"), buff);
 	p->WriteProfileInt(sec, _T("Overwrite"), m_CtrlCheckOverwrite.GetCheck() != BST_UNCHECKED ? 1 : 0);
 	p->WriteProfileInt(sec, _T("Copy file if original is smaller"), m_CtrlCheckCopyIfSmaller.GetCheck() != BST_UNCHECKED ? 1 : 0);
+	p->WriteProfileInt(sec, _T("Save to original folder"), m_CtrlCheckSaveToOriginalFolder.GetCheck() != BST_UNCHECKED ? 1 : 0);
 }
 
 
@@ -842,10 +853,16 @@ void CMozJpegGUIDlg::InitGUI()
 	else {
 		OutputDebugString(_T("Failed to load resource: IDS_TUNE_TRELLIS_MS_SSIM\n"));
 	}
+	
 	if (!str.LoadString(IDS_TUNE_TRELLIS_TIP)) {
 		OutputDebugString(_T("Failed to load resource: IDS_TUNE_TRELLIS_TIP\n"));
 	}
 	VERIFY(m_CtrlToolTip.AddTool(GetDlgItem(IDC_COMBO_TUNE_TRELLIS_OPTIMIZATION), str));
+
+	if (!str.LoadString(IDS_SAVE_TO_ORIGINAL_FOLDER)) {
+		OutputDebugString(_T("Failed to load resource: IDS_SAVE_TO_ORIGINAL_FOLDER\n"));
+	}
+	VERIFY(m_CtrlToolTip.AddTool(GetDlgItem(IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER), str));
 }
 
 
@@ -973,4 +990,17 @@ void CMozJpegGUIDlg::OnCbnDropdownComboSetting()
 
 	m_CtrlComboSetting.DeleteString(m_SelectedSetting);
 	m_CtrlComboSetting.InsertString(m_SelectedSetting, edit);
+}
+
+
+void CMozJpegGUIDlg::OnBnClickedCheckSaveToOriginalFolder()
+{
+	if (m_CtrlCheckSaveToOriginalFolder.GetCheck() == BST_CHECKED) {
+		m_CtrlEditSaveTo.EnableWindow(FALSE);
+		m_CtrlButtonSaveTo.EnableWindow(FALSE);
+	}
+	else {
+		m_CtrlEditSaveTo.EnableWindow(TRUE);
+		m_CtrlButtonSaveTo.EnableWindow(TRUE);
+	}
 }
