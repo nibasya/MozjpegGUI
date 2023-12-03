@@ -1,5 +1,6 @@
 /*
- * Copyright (C)2009-2014, 2016-2018 D. R. Commander.  All Rights Reserved.
+ * Copyright (C)2009-2014, 2016-2019, 2021 D. R. Commander.
+ *                                         All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -121,6 +122,8 @@ final class TJBench {
     int rindex = TJ.getRedOffset(pixelFormat);
     int gindex = TJ.getGreenOffset(pixelFormat);
     int bindex = TJ.getBlueOffset(pixelFormat);
+    if ((long)w[0] * (long)h[0] * (long)ps > (long)Integer.MAX_VALUE)
+      throw new Exception("Image is too large");
     byte[] dstBuf = new byte[w[0] * h[0] * ps];
     int pixels = w[0] * h[0], dstPtr = 0, rgbPtr = 0;
 
@@ -175,8 +178,11 @@ final class TJBench {
 
     tjd = new TJDecompressor();
 
-    if (dstBuf == null)
+    if (dstBuf == null) {
+      if ((long)pitch * (long)scaledh > (long)Integer.MAX_VALUE)
+        throw new Exception("Image is too large");
       dstBuf = new byte[pitch * scaledh];
+    }
 
     /* Set the destination buffer to gray so we know whether the decompressor
        attempted to write to it */
@@ -202,7 +208,9 @@ final class TJBench {
           int width = doTile ? Math.min(tilew, w - x) : scaledw;
           int height = doTile ? Math.min(tileh, h - y) : scaledh;
 
-          tjd.setSourceImage(jpegBuf[tile], jpegSize[tile]);
+          try {
+            tjd.setSourceImage(jpegBuf[tile], jpegSize[tile]);
+          } catch (TJException e) { handleTJException(e); }
           if (doYUV) {
             yuvImage.setBuf(yuvImage.getBuf(), width, yuvPad, height, subsamp);
             try {
@@ -329,6 +337,8 @@ final class TJBench {
     String pfStr = PIXFORMATSTR[pf];
     YUVImage yuvImage = null;
 
+    if ((long)pitch * (long)h > (long)Integer.MAX_VALUE)
+      throw new Exception("Image is too large");
     tmpBuf = new byte[pitch * h];
 
     if (quiet == 0)
@@ -469,6 +479,8 @@ final class TJBench {
       if (!compOnly)
         decomp(srcBuf, jpegBuf, jpegSize, tmpBuf, w, h, subsamp, jpegQual,
                fileName, tilew, tileh);
+      else if (quiet == 1)
+        System.out.println("N/A");
 
       if (tilew == w && tileh == h) break;
     }
@@ -489,6 +501,8 @@ final class TJBench {
     int tw, th, ttilew, ttileh, tntilesw, tntilesh, tsubsamp;
 
     FileInputStream fis = new FileInputStream(fileName);
+    if (fis.getChannel().size() > (long)Integer.MAX_VALUE)
+      throw new Exception("Image is too large");
     int srcSize = (int)fis.getChannel().size();
     srcBuf = new byte[srcSize];
     fis.read(srcBuf, 0, srcSize);
@@ -500,7 +514,9 @@ final class TJBench {
 
     tjt = new TJTransformer();
 
-    tjt.setSourceImage(srcBuf, srcSize);
+    try {
+      tjt.setSourceImage(srcBuf, srcSize);
+    } catch (TJException e) { handleTJException(e); }
     w = tjt.getWidth();
     h = tjt.getHeight();
     subsamp = tjt.getSubsamp();
@@ -607,7 +623,9 @@ final class TJBench {
         elapsed = 0.;
         while (true) {
           start = getTime();
-          tjt.transform(jpegBuf, t, flags);
+          try {
+            tjt.transform(jpegBuf, t, flags);
+          } catch (TJException e) { handleTJException(e); }
           jpegSize = tjt.getTransformedSizes();
           elapsed += getTime() - start;
           if (iter >= 0) {
@@ -631,7 +649,7 @@ final class TJBench {
                             sigFig((double)(w * h * ps) /
                                    (double)totalJpegSize, 4),
                             quiet == 2 ? "\n" : "  ");
-        } else if (quiet == 0) {
+        } else {
           System.out.format("Transform     --> Frame rate:         %f fps\n",
                             1.0 / elapsed);
           System.out.format("                  Output image size:  %d bytes\n",
@@ -705,7 +723,7 @@ final class TJBench {
     System.out.println("     bytes to which each row of each plane in the intermediate YUV image is");
     System.out.println("     padded (default = 1)");
     System.out.println("-scale M/N = Scale down the width/height of the decompressed JPEG image by a");
-    System.out.print  ("     factor of M/N (M/N = ");
+    System.out.print("     factor of M/N (M/N = ");
     for (i = 0; i < nsf; i++) {
       System.out.format("%d/%d", scalingFactors[i].getNum(),
                         scalingFactors[i].getDenom());
@@ -735,6 +753,8 @@ final class TJBench {
     System.out.println("-componly = Stop after running compression tests.  Do not test decompression.");
     System.out.println("-nowrite = Do not write reference or output images (improves consistency");
     System.out.println("     of performance measurements.)");
+    System.out.println("-limitscans = Refuse to decompress or transform progressive JPEG images that");
+    System.out.println("     have an unreasonably large number of scans");
     System.out.println("-stoponwarning = Immediately discontinue the current");
     System.out.println("     compression/decompression/transform operation if the underlying codec");
     System.out.println("     throws a warning (non-fatal error)\n");
@@ -912,6 +932,8 @@ final class TJBench {
             compOnly = true;
           else if (argv[i].equalsIgnoreCase("-nowrite"))
             write = false;
+          else if (argv[i].equalsIgnoreCase("-limitscans"))
+            flags |= TJ.FLAG_LIMITSCANS;
           else if (argv[i].equalsIgnoreCase("-stoponwarning"))
             flags |= TJ.FLAG_STOPONWARNING;
           else usage();

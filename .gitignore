@@ -33,3 +33,9 @@ _UpgradeReport_Files/
 _ReSharper.*/
 *.db-shm
 *.db-wal
+x86/zlib
+x86/libpng
+x86/mozjpeg
+x64/zlib
+x64/libpng
+x64/mozjpeg

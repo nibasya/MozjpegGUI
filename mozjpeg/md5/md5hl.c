@@ -6,7 +6,7 @@
  * this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
  * ----------------------------------------------------------------------------
  * libjpeg-turbo Modifications:
- * Copyright (C)2016, 2018 D. R. Commander.  All Rights Reserved.
+ * Copyright (C)2016, 2018-2019, 2022 D. R. Commander.  All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -34,6 +34,10 @@
  * ----------------------------------------------------------------------------
  */
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_DEPRECATE
+#endif
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -56,7 +60,7 @@
 
 #include "./md5.h"
 
-char *MD5End(MD5_CTX *ctx, char *buf)
+static char *MD5End(MD5_CTX *ctx, char *buf)
 {
   int i;
   unsigned char digest[LENGTH];
@@ -89,7 +93,7 @@ char *MD5FileChunk(const char *filename, char *buf, off_t ofs, off_t len)
   off_t n;
 
   MD5Init(&ctx);
-#if _WIN32
+#ifdef _WIN32
   f = _open(filename, O_RDONLY | O_BINARY);
 #else
   f = open(filename, O_RDONLY);
@@ -121,14 +125,5 @@ char *MD5FileChunk(const char *filename, char *buf, off_t ofs, off_t len)
   errno = e;
   if (i < 0)
     return 0;
-  return (MD5End(&ctx, buf));
-}
-
-char *MD5Data(const void *data, unsigned int len, char *buf)
-{
-  MD5_CTX ctx;
-
-  MD5Init(&ctx);
-  MD5Update(&ctx, (unsigned char *)data, len);
   return (MD5End(&ctx, buf));
 }

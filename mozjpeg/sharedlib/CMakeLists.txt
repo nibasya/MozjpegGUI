@@ -23,7 +23,7 @@ foreach(src ${JPEG_SOURCES})
   set(JPEG_SRCS ${JPEG_SRCS} ../${src})
 endforeach()
 
-if(WITH_SIMD AND MSVC_IDE)
+if(WITH_SIMD AND (MSVC_IDE OR XCODE))
   # This tells CMake that the "source" files haven't been generated yet
   set_source_files_properties(${SIMD_OBJS} PROPERTIES GENERATED 1)
 endif()
@@ -34,6 +34,11 @@ if(WIN32)
 else()
     set(DEFFILE ../win/jpeg${SO_MAJOR_VERSION}.def)
   endif()
+endif()
+if(MSVC)
+  configure_file(${CMAKE_SOURCE_DIR}/win/jpeg.rc.in
+    ${CMAKE_BINARY_DIR}/win/jpeg.rc)
+  set(JPEG_SRCS ${JPEG_SRCS} ${CMAKE_BINARY_DIR}/win/jpeg.rc)
 endif()
 add_library(jpeg SHARED ${JPEG_SRCS} ${DEFFILE} $<TARGET_OBJECTS:simd>
   ${SIMD_OBJS})
@@ -55,7 +60,8 @@ if(MAPFLAG)
     LINK_FLAGS "${MAPFLAG}${CMAKE_CURRENT_BINARY_DIR}/../libjpeg.map")
 endif()
 if(MSVC)
-  set_target_properties(jpeg PROPERTIES SUFFIX ${SO_MAJOR_VERSION}.dll)
+  set_target_properties(jpeg PROPERTIES
+    RUNTIME_OUTPUT_NAME jpeg${SO_MAJOR_VERSION})
   # The jsimd_*.c file is built using /MT, so this prevents a linker warning.
   set_target_properties(jpeg PROPERTIES LINK_FLAGS "/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:LIBCMTD")
 elseif(MINGW)
@@ -71,12 +77,33 @@ else()
   set(COMPILE_FLAGS "-DBMP_SUPPORTED -DGIF_SUPPORTED -DPPM_SUPPORTED -DTARGA_SUPPORTED ${USE_SETMODE}")
 	set(CJPEG_BMP_SOURCES ../rdbmp.c ../rdtarga.c)
 	set(DJPEG_BMP_SOURCES ../wrbmp.c ../wrtarga.c)
+
+  if(PNG_SUPPORTED)
+    report_option(PNG_SUPPORTED "PNG reading support")
+    set(COMPILE_FLAGS "${COMPILE_FLAGS} -DPNG_SUPPORTED")
+    set(CJPEG_BMP_SOURCES ${CJPEG_BMP_SOURCES} ../rdpng.c)
+  endif()
 endif()
 
 add_executable(cjpeg ../cjpeg.c ../cdjpeg.c ../rdgif.c ../rdppm.c ../rdjpeg.c
   ../rdswitch.c ${CJPEG_BMP_SOURCES})
 set_property(TARGET cjpeg PROPERTY COMPILE_FLAGS ${COMPILE_FLAGS})
 target_link_libraries(cjpeg jpeg)
+
+if(PNG_SUPPORTED)
+  # to avoid finding static library from CMake cache
+  unset(PNG_LIBRARY CACHE)
+  unset(PNG_LIBRARY_RELEASE CACHE)
+  unset(PNG_LIBRARY_DEBUG CACHE)
+  unset(ZLIB_LIBRARY CACHE)
+  unset(ZLIB_LIBRARY_RELEASE CACHE)
+  unset(ZLIB_LIBRARY_DEBUG CACHE)
+
+  find_package(PNG 1.6 REQUIRED)
+  find_package(ZLIB REQUIRED)
+  target_include_directories(cjpeg PUBLIC ${PNG_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+  target_link_libraries(cjpeg ${PNG_LIBRARY} ${ZLIB_LIBRARY})
+endif()
 
 add_executable(djpeg ../djpeg.c ../cdjpeg.c ../rdcolmap.c ../rdswitch.c
   ../wrgif.c ../wrppm.c ${DJPEG_BMP_SOURCES})
@@ -90,7 +117,15 @@ set_property(TARGET jpegtran PROPERTY COMPILE_FLAGS "${USE_SETMODE}")
 add_executable(jcstest ../jcstest.c)
 target_link_libraries(jcstest jpeg)
 
-install(TARGETS jpeg cjpeg djpeg jpegtran
+install(TARGETS jpeg EXPORT ${CMAKE_PROJECT_NAME}Targets
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS cjpeg djpeg jpegtran
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+if(NOT CMAKE_VERSION VERSION_LESS "3.1" AND MSVC AND
+  CMAKE_C_LINKER_SUPPORTS_PDB)
+  install(FILES "$<TARGET_PDB_FILE:jpeg>"
+    DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
+endif()

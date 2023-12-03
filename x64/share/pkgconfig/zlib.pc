@@ -1,12 +1,12 @@
-prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
-exec_prefix=C:/Users/momo8/Documents/Git/MozjpegGUI/x64
-libdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/lib
-sharedlibdir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/lib
-includedir=C:/Users/momo8/Documents/Git/MozjpegGUI/x64/include
+prefix=C:/Users/momo8/OneDrive/Documents/Git/MozjpegGUI/x64
+exec_prefix=C:/Users/momo8/OneDrive/Documents/Git/MozjpegGUI/x64
+libdir=lib
+sharedlibdir=lib
+includedir=include
 
 Name: zlib
 Description: zlib compression library
-Version: 1.2.11
+Version: 1.3
 
 Requires:
 Libs: -L${libdir} -L${sharedlibdir} -lz
