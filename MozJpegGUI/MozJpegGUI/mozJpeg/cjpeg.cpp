@@ -1,8 +1,9 @@
 /*
  * cjpeg.cpp
  * This file was originally named as cjpeg.c; which has modification history as below.
- * cjpeg.c was modifeid into cjpeg.cpp:
- * Copyright (C) 2020, Donadona.
+ * The file is based on mozjpeg 4.1.1.
+ * cjpeg.c is modifeid into cjpeg.cpp:
+ * Copyright (C) 2020, 2023, Donadona.
  * Many global variables are now a member of class CJpeg to let conversion handled as an object.
  * Command line options are kept as-it-is to have a compatibility.
  * ERREXIT and other exit() functions are throwing exceptions instead of exiting.
@@ -14,7 +15,7 @@
  * Copyright (C) 1991-1998, Thomas G. Lane.
  * Modified 2003-2011 by Guido Vollbeding.
  * libjpeg-turbo Modifications:
- * Copyright (C) 2010, 2013-2014, 2017, D. R. Commander.
+   Copyright (C) 2010, 2013-2014, 2017, 2019-2022, D. R. Commander.
  * mozjpeg Modifications:
  * Copyright (C) 2014, Mozilla Corporation.
  * For conditions of distribution and use, see the accompanying README file.
@@ -50,11 +51,6 @@
 //#include <crtdbg.h>
 //#endif
 
-#ifndef HAVE_STDLIB_H           /* <stdlib.h> should declare malloc(),free() */
-extern void *malloc(size_t size);
-extern void free(void *ptr);
-#endif
-
 #ifdef USE_CCOMMAND             /* command-line reader for Macintosh */
 #ifdef __MWERKS__
 #include <SIOUX.h>              /* Metrowerks needs this */
@@ -78,9 +74,10 @@ static const char * const cdjpeg_message_table[] = {
 
 /* initialize CJpeg class */
 CJpeg::CJpeg() :
-    m_input_file(NULL),
-    m_is_targa(false), m_is_jpeg(false), m_copy_markers(false),
-    m_progname(NULL), m_icc_filename(NULL), m_outfilename(NULL), m_memdst(false),
+	m_input_file(NULL),
+	m_is_targa(false), m_is_jpeg(false), m_copy_markers(false),
+	m_progname(NULL), m_icc_filename(NULL), m_outfilename(NULL), m_memdst(false),
+	m_report(FALSE), m_strict(FALSE),
 	m_outbuffer(NULL), m_outsize(0), m_pSyncAbort(NULL), m_Paused(NULL)
 {
 }
@@ -97,9 +94,9 @@ CJpeg::CJpeg() :
  *     2) assume we can push back more than one character (works in
  *        some C implementations, but unportable);
  *     3) provide our own buffering (breaks input readers that want to use
- *        stdio directly, such as the RLE library);
+ *        stdio directly);
  * or  4) don't put back the data, and modify the input_init methods to assume
- *        they start reading after the start of file (also breaks RLE library).
+ *        they start reading after the start of file.
  * #1 is attractive for MS-DOS but is untenable on Unix.
  *
  * The most portable solution for file types that can't be identified by their
@@ -146,10 +143,6 @@ cjpeg_source_ptr CJpeg::select_file_type(FILE* infile)
 	case 0x89:
         m_copy_markers = TRUE;
 		return jinit_read_png(&m_cinfo);
-#endif
-#ifdef RLE_SUPPORTED
-	case 'R':
-		return jinit_read_rle(m_cinfo);
 #endif
 #ifdef TARGA_SUPPORTED
 	case 0x00:
@@ -223,25 +216,28 @@ void CJpeg::usage()
   fprintf(stderr, "  -arithmetic    Use arithmetic coding\n");
 #endif
 #ifdef DCT_ISLOW_SUPPORTED
-  fprintf(stderr, "  -dct int       Use integer DCT method%s\n",
+  fprintf(stderr, "  -dct int       Use accurate integer DCT method%s\n",
           (JDCT_DEFAULT == JDCT_ISLOW ? " (default)" : ""));
 #endif
 #ifdef DCT_IFAST_SUPPORTED
-  fprintf(stderr, "  -dct fast      Use fast integer DCT (less accurate)%s\n",
-          (JDCT_DEFAULT == JDCT_IFAST ? " (default)" : ""));
+  fprintf(stderr, "  -dct fast      Use less accurate integer DCT method [legacy feature]%s\n",
+	(JDCT_DEFAULT == JDCT_IFAST ? " (default)" : ""));
 #endif
 #ifdef DCT_FLOAT_SUPPORTED
-  fprintf(stderr, "  -dct float     Use floating-point DCT method%s\n",
+  fprintf(stderr, "  -dct float     Use floating-point DCT method [legacy feature]%s\n",
           (JDCT_DEFAULT == JDCT_FLOAT ? " (default)" : ""));
 #endif
   fprintf(stderr, "  -quant-baseline Use 8-bit quantization table entries for baseline JPEG compatibility\n");
   fprintf(stderr, "  -quant-table N Use predefined quantization table N:\n");
   fprintf(stderr, "                 - 0 JPEG Annex K\n");
   fprintf(stderr, "                 - 1 Flat\n");
-  fprintf(stderr, "                 - 2 Custom, tuned for MS-SSIM\n");
-  fprintf(stderr, "                 - 3 ImageMagick table by N. Robidoux\n");
-  fprintf(stderr, "                 - 4 Custom, tuned for PSNR-HVS\n");
+  fprintf(stderr, "                 - 2 Tuned for MS-SSIM on Kodak image set\n");
+  fprintf(stderr, "                 - 3 ImageMagick table by N. Robidoux (default)\n");
+  fprintf(stderr, "                 - 4 Tuned for PSNR-HVS on Kodak image set\n");
   fprintf(stderr, "                 - 5 Table from paper by Klein, Silverstein and Carney\n");
+  fprintf(stderr, "                 - 6 Table from paper by Watson, Taylor and Borthwick\n");
+  fprintf(stderr, "                 - 7 Table from paper by Ahumada, Watson, Peterson\n");
+  fprintf(stderr, "                 - 8 Table from paper by Peterson, Ahumada and Watson\n");
   fprintf(stderr, "  -icc FILE      Embed ICC profile contained in FILE\n");
   fprintf(stderr, "  -restart N     Set restart interval in rows, or in blocks with B\n");
 #ifdef INPUT_SMOOTHING_SUPPORTED
@@ -252,6 +248,8 @@ void CJpeg::usage()
 #if JPEG_LIB_VERSION >= 80 || defined(MEM_SRCDST_SUPPORTED)
   fprintf(stderr, "  -memdst        Compress to memory instead of file (useful for benchmarking)\n");
 #endif
+  fprintf(stderr, "  -report        Report compression progress\n");
+  fprintf(stderr, "  -strict        Treat all warnings as fatal\n");
   fprintf(stderr, "  -verbose  or  -debug   Emit debug output\n");
   fprintf(stderr, "  -version       Print version information and exit\n");
   fprintf(stderr, "Switches for wizards:\n");
@@ -312,10 +310,10 @@ int CJpeg::parse_switches(int argc, char** argv, int last_file_arg_seen, boolean
 		if (keymatch(arg, "arithmetic", 1)) {
 			/* Use arithmetic coding. */
 #ifdef C_ARITH_CODING_SUPPORTED
-			cinfo->arith_code = TRUE;
+			m_cinfo.arith_code = TRUE;
 
 			/* No table optimization required for AC */
-			cinfo->optimize_coding = FALSE;
+			m_cinfo.optimize_coding = FALSE;
 #else
 			ERREXIT(&m_cinfo, JERR_CJPEG_SWITCH_ARITHMATIC);
 #endif
@@ -486,6 +484,9 @@ int CJpeg::parse_switches(int argc, char** argv, int last_file_arg_seen, boolean
 			qtablefile = argv[argn];
 			/* We postpone actually reading the file in case -quality comes later. */
 		}
+		else if (keymatch(arg, "report", 3)) {
+			m_report = TRUE;
+		}
 		else if (keymatch(arg, "quant-table", 7)) {
 			int val;
 			if (++argn >= argc) {       /* advance to next argument */
@@ -579,7 +580,9 @@ int CJpeg::parse_switches(int argc, char** argv, int last_file_arg_seen, boolean
 				usage();
 			}
 			m_cinfo.smoothing_factor = val;
-
+		}
+		else if (keymatch(arg, "strict", 2)) {
+			m_strict = TRUE;
 		}
 		else if (keymatch(arg, "targa", 1)) {
 			/* Input file is Targa format. */
@@ -727,6 +730,19 @@ void CJpeg::output_message(j_common_ptr cinfo)
 }
 
 
+void CJpeg::my_emit_message(j_common_ptr cinfo, int msg_level)
+{
+	if (msg_level < 0) {
+		/* Treat warning as fatal */
+		cinfo->err->error_exit(cinfo);
+	}
+	else {
+		if (cinfo->err->trace_level >= msg_level)
+			cinfo->err->output_message(cinfo);
+	}
+}
+
+
 /*
  * The main program.
  */
@@ -734,9 +750,7 @@ void CJpeg::output_message(j_common_ptr cinfo)
 int CJpeg::cjpeg_main(int argc, char** argv)
 {
 	struct jpeg_error_mgr jerr;
-#ifdef PROGRESS_REPORT
 	struct cdjpeg_progress_mgr progress;
-#endif
 	int file_index;
 	cjpeg_source_ptr src_mgr;
 	FILE* icc_file = NULL;
@@ -781,6 +795,9 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 
 	file_index = parse_switches(argc, argv, 0, FALSE);
 
+	if (m_strict)
+		jerr.emit_message = my_emit_message;
+
 	/* Open the input file. */
 	if (file_index < argc) {
 		if (fopen_s(&m_input_file, argv[file_index], READ_BINARY) != 0) {
@@ -819,9 +836,10 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 		fclose(icc_file);
 	}
 
-#ifdef PROGRESS_REPORT
-	start_progress_monitor((j_common_ptr)&cinfo, &progress);
-#endif
+	if (m_report) {
+		start_progress_monitor((j_common_ptr)&m_cinfo, &progress);
+		progress.report = m_report;
+	}
 
 	/* Figure out the input file format, and set up to read it. */
 	src_mgr = select_file_type(m_input_file);
@@ -925,12 +943,10 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 		m_input_file = NULL;
 	}
 
-#ifdef PROGRESS_REPORT
-	end_progress_monitor((j_common_ptr)&cinfo);
-#endif
+	if (m_report)
+		end_progress_monitor((j_common_ptr)&m_cinfo);
 
-	if (icc_profile != NULL)
-		free(icc_profile);
+	free(icc_profile);
 
 	/* All done. */
 	return TRUE;                     /* suppress no-return-value warnings */

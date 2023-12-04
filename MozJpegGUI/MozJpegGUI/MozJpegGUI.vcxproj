@@ -236,6 +236,7 @@
     <ClCompile Include="InfoProgressCtrl.cpp" />
     <ClCompile Include="MozJpegGUI.cpp" />
     <ClCompile Include="MozJpegGUIDlg.cpp" />
+    <ClCompile Include="mozJpeg\cdjpeg.cpp" />
     <ClCompile Include="mozJpeg\cjpeg.cpp" />
     <ClCompile Include="mozJpeg\rdbmp.cpp" />
     <ClCompile Include="mozJpeg\rdgif.cpp" />

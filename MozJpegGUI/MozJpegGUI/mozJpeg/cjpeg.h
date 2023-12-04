@@ -11,6 +11,7 @@ public:
 	int parse_switches(int argc, char** argv, int last_file_arg_seen, boolean for_real);
 	static void error_exit(j_common_ptr cinfo);
 	static void output_message(j_common_ptr cinfo);
+	static void my_emit_message(j_common_ptr cinfo, int msg_level);
 	int cjpeg_main(int argc, char** argv);
 
 	jpeg_compress_struct m_cinfo;
@@ -28,6 +29,8 @@ public:
 	char* m_icc_filename;      /* for -icc switch */
 	char* m_outfilename;       /* for -outfile switch */
 	boolean m_memdst;                 /* for -memdst switch */
+	boolean m_report;                 /* for -report switch */
+	boolean m_strict;                 /* for -strict switch */
 	static CString Version();
 };
 

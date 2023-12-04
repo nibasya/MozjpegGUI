@@ -152,6 +152,9 @@
     <ClCompile Include="CAboutDlg.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="mozJpeg\cdjpeg.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MozJpegGUI.rc">
