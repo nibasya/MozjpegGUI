@@ -23,6 +23,7 @@ syntax:glob
 *.lib
 *.sbr
 *.VC.db
+*.vsidx
 *.opendb
 Thumbs.db
 *.ipch

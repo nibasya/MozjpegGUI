@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\x64\include;..\..\mozjpeg;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\x64\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\..\x64\lib;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,8 +91,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\x64\include;..\..\mozjpeg;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\x64\include</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\..\x64\lib;</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -207,7 +210,15 @@
     <ClInclude Include="InfoProgressCtrl.h" />
     <ClInclude Include="MozJpegGUI.h" />
     <ClInclude Include="MozJpegGUIDlg.h" />
+    <ClInclude Include="mozJpeg\cderror.h" />
+    <ClInclude Include="mozJpeg\cdjpeg.h" />
     <ClInclude Include="mozJpeg\cjpeg.h" />
+    <ClInclude Include="mozJpeg\cmyk.h" />
+    <ClInclude Include="mozJpeg\jconfig.h" />
+    <ClInclude Include="mozJpeg\jconfigint.h" />
+    <ClInclude Include="mozJpeg\jinclude.h" />
+    <ClInclude Include="mozJpeg\jpegint.h" />
+    <ClInclude Include="mozJpeg\jversion.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RPTT.h" />
@@ -225,7 +236,6 @@
     <ClCompile Include="InfoProgressCtrl.cpp" />
     <ClCompile Include="MozJpegGUI.cpp" />
     <ClCompile Include="MozJpegGUIDlg.cpp" />
-    <ClCompile Include="mozJpeg\cdjpeg.cpp" />
     <ClCompile Include="mozJpeg\cjpeg.cpp" />
     <ClCompile Include="mozJpeg\rdbmp.cpp" />
     <ClCompile Include="mozJpeg\rdgif.cpp" />
