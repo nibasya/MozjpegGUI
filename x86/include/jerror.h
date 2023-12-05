@@ -271,7 +271,7 @@ JMESSAGE(JERR_BAD_DROP_SAMPLING,
    (*(cinfo)->err->error_exit) ((j_common_ptr)(cinfo)))
 #define ERREXITS(cinfo, code, str) \
   ((cinfo)->err->msg_code = (code), \
-   strncpy((cinfo)->err->msg_parm.s, (str), JMSG_STR_PARM_MAX), \
+   strncpy_s((cinfo)->err->msg_parm.s, JMSG_STR_PARM_MAX-1, (str), JMSG_STR_PARM_MAX), \
    (cinfo)->err->msg_parm.s[JMSG_STR_PARM_MAX - 1] = '\0', \
    (*(cinfo)->err->error_exit) ((j_common_ptr)(cinfo)))
 
