@@ -39,6 +39,11 @@
  */
 
 #include "pch.h"
+
+#ifdef CJPEG_FUZZER
+#define JPEG_INTERNALS
+#endif
+
 #include "cdjpeg.h"             /* Common decls for cjpeg/djpeg applications */
 #include "jversion.h"           /* for version message */
 #include "jconfigint.h"
@@ -81,6 +86,44 @@ CJpeg::CJpeg() :
 	m_outbuffer(NULL), m_outsize(0), m_pSyncAbort(NULL), m_Paused(NULL)
 {
 }
+
+#ifdef CJPEG_FUZZER
+
+#include <setjmp.h>
+
+struct my_error_mgr {
+	struct jpeg_error_mgr pub;
+	jmp_buf setjmp_buffer;
+};
+
+void my_error_exit(j_common_ptr cinfo)
+{
+	struct my_error_mgr* myerr = (struct my_error_mgr*)cinfo->err;
+
+	longjmp(myerr->setjmp_buffer, 1);
+}
+
+static void my_emit_message_fuzzer(j_common_ptr cinfo, int msg_level)
+{
+	if (msg_level < 0)
+		cinfo->err->num_warnings++;
+}
+
+#define HANDLE_ERROR() { \
+  if (cinfo.global_state > CSTATE_START) { \
+    if (memdst && outbuffer) \
+      (*cinfo.dest->term_destination) (&cinfo); \
+    jpeg_abort_compress(&cinfo); \
+  } \
+  jpeg_destroy_compress(&cinfo); \
+  if (input_file != stdin && input_file != NULL) \
+    fclose(input_file); \
+  if (memdst) \
+    free(outbuffer); \
+  return EXIT_FAILURE; \
+}
+
+#endif
 
 /*
  * This routine determines what format the input file is,
@@ -749,7 +792,12 @@ void CJpeg::my_emit_message(j_common_ptr cinfo, int msg_level)
 
 int CJpeg::cjpeg_main(int argc, char** argv)
 {
+#ifdef CJPEG_FUZZER
+	struct my_error_mgr myerr;
+	struct jpeg_error_mgr& jerr = myerr.pub;
+#else
 	struct jpeg_error_mgr jerr;
+#endif
 	struct cdjpeg_progress_mgr progress;
 	int file_index;
 	cjpeg_source_ptr src_mgr;
@@ -835,6 +883,12 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 		}
 		fclose(icc_file);
 	}
+#ifdef CJPEG_FUZZER
+	jerr.error_exit = my_error_exit;
+	jerr.emit_message = my_emit_message_fuzzer;
+	if (setjmp(myerr.setjmp_buffer))
+		HANDLE_ERROR()
+#endif
 
 	if (m_report) {
 		start_progress_monitor((j_common_ptr)&m_cinfo, &progress);
@@ -844,6 +898,9 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 	/* Figure out the input file format, and set up to read it. */
 	src_mgr = select_file_type(m_input_file);
 	src_mgr->input_file = m_input_file;
+#ifdef CJPEG_FUZZER
+	src_mgr->max_pixels = 1048576;
+#endif
 
 	/* Read the input file header to obtain file size & colorspace. */
 	(*src_mgr->start_input) (&m_cinfo, src_mgr);
@@ -862,6 +919,11 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 	jpeg_mem_dest(&m_cinfo, &m_outbuffer, &m_outsize);
 #else
 	ERREXIT(&m_cinfo, JERR_CJPEG_MEM_SRCDST_UNSUPPORTED);
+#endif
+
+#ifdef CJPEG_FUZZER
+	if (setjmp(myerr.setjmp_buffer))
+		HANDLE_ERROR()
 #endif
 
 	/* Start compressor */
