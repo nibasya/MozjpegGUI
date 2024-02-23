@@ -54,6 +54,7 @@ void CMozJpegGUIDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_COPY_IF_SMALLER, m_CtrlCheckCopyIfSmaller);
 	DDX_Control(pDX, IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER, m_CtrlCheckSaveToOriginalFolder);
 	DDX_Control(pDX, IDC_BUTTON_SAVETO, m_CtrlButtonSaveTo);
+	DDX_Control(pDX, IDC_CHECK_KEEP_METADATA, m_CtrlCheckKeepMetadata);
 }
 
 BEGIN_MESSAGE_MAP(CMozJpegGUIDlg, CDialogEx)
@@ -609,6 +610,7 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingLoad()
 	m_CtrlCheckCopyIfSmaller.SetCheck(p->GetProfileInt(sec, _T("Copy file if original is smaller"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	m_CtrlCheckSaveToOriginalFolder.SetCheck(p->GetProfileInt(sec, _T("Save to original folder"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	OnBnClickedCheckSaveToOriginalFolder();
+	m_CtrlCheckKeepMetadata.SetCheck(p->GetProfileInt(sec, _T("Keep metadata"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	m_CurrentSetting = m_SelectedSetting;
 }
 
@@ -640,6 +642,7 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingSave()
 	p->WriteProfileInt(sec, _T("Overwrite"), m_CtrlCheckOverwrite.GetCheck() != BST_UNCHECKED ? 1 : 0);
 	p->WriteProfileInt(sec, _T("Copy file if original is smaller"), m_CtrlCheckCopyIfSmaller.GetCheck() != BST_UNCHECKED ? 1 : 0);
 	p->WriteProfileInt(sec, _T("Save to original folder"), m_CtrlCheckSaveToOriginalFolder.GetCheck() != BST_UNCHECKED ? 1 : 0);
+	p->WriteProfileInt(sec, _T("Keep metadata"), m_CtrlCheckKeepMetadata.GetCheck() != BST_UNCHECKED ? 1 : 0);
 }
 
 

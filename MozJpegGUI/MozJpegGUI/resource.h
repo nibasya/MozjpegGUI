@@ -103,6 +103,7 @@
 #define IDC_ZLIB_VERSION                1045
 #define IDC_MOZJPEG_VERSION             1046
 #define IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER 1047
+#define IDC_CHECK_KEEP_METADATA         1048
 
 // Next default values for new objects
 // 

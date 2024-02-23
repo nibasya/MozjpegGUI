@@ -88,4 +88,5 @@ public:
 	CButton m_CtrlCheckSaveToOriginalFolder;
 	afx_msg void OnBnClickedCheckSaveToOriginalFolder();
 	CButton m_CtrlButtonSaveTo;
+	CButton m_CtrlCheckKeepMetadata;
 };
