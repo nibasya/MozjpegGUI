@@ -540,7 +540,7 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
         return FALSE;
       /* Convert user 0-100 rating to percentage scaling */
 #if JPEG_LIB_VERSION >= 70
-      cinfo->q_scale_factor[tblno] = jpeg_float_quality_scaling(val);
+      cinfo->q_scale_factor[tblno] = (int)jpeg_float_quality_scaling(val);
 #else
       q_scale_factor[tblno] = static_cast<int>(jpeg_float_quality_scaling(val));
 #endif
@@ -549,7 +549,7 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
     } else {
       /* reached end of parameter, set remaining factors to last value */
 #if JPEG_LIB_VERSION >= 70
-      cinfo->q_scale_factor[tblno] = jpeg_float_quality_scaling(val);
+      cinfo->q_scale_factor[tblno] = (int)jpeg_float_quality_scaling(val);
 #else
       q_scale_factor[tblno] = static_cast<int>(jpeg_float_quality_scaling(val));
 #endif
