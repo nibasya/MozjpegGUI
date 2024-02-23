@@ -183,6 +183,11 @@
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions);BMP_SUPPORTED;GIF_SUPPORTED;PPM_SUPPORTED;TARGA_SUPPORTED;USE_SETMODE;PNG_SUPPORTED;</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>
+      </EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions512</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -242,7 +247,10 @@
     <ClCompile Include="MozJpegGUI.cpp" />
     <ClCompile Include="MozJpegGUIDlg.cpp" />
     <ClCompile Include="mozJpeg\cdjpeg.cpp" />
-    <ClCompile Include="mozJpeg\cjpeg.cpp" />
+    <ClCompile Include="mozJpeg\cjpeg.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="mozJpeg\rdbmp.cpp" />
     <ClCompile Include="mozJpeg\rdgif.cpp" />
     <ClCompile Include="mozJpeg\rdjpeg.cpp" />
