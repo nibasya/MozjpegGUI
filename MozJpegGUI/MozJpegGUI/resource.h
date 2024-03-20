@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ で生成されたインクルード ファイル。
-// MozJpegGUI.rc で使用
+// C:\Users\momo8\OneDrive\Documents\Git\MozjpegGUI\MozJpegGUI\MozJpegGUIENU\MozJpegGUIENU.rc で使用
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
@@ -58,6 +58,7 @@
 #define IDS_MSG_SELECT_FOLDER_TO_LOAD_IMAGE 148
 #define IDS_ERR_NOT_VALID_FOLDER        149
 #define IDS_SAVE_TO_ORIGINAL_FOLDER     150
+#define IDS_ERR_FAILED_TO_START_GDIPLUS 151
 #define IDC_BUTTON_ADDFOLDER            1000
 #define IDC_BUTTON_CONVERT              1001
 #define IDC_LIST_FILELIST               1002

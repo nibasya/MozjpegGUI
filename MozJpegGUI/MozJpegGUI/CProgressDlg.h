@@ -82,6 +82,7 @@ public:
 	bool m_Paused;
 	CMozJpegGUIDlg* m_pParent;
 	bool m_fCopyIfSmaller;
+	bool m_fKeepMetadata;
 
 	// internal members
 private:
@@ -93,4 +94,5 @@ private:
 	LARGE_INTEGER m_StartTime;
 	LARGE_INTEGER m_EndTime;
 	HANDLE m_hCompleteThread;
+	ULONG_PTR m_GdiPlusToken;	// token for GDI+
 };

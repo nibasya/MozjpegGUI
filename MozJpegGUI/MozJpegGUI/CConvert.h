@@ -20,8 +20,12 @@ private:
 	LONGLONG m_InSize;
 	BYTE* m_OutData;
 	LONGLONG m_OutSize;
+	Gdiplus::PropertyItem* m_pMetadata;
+	UINT m_MetaCount;
 	UINT Main();
 	void Pause();
+	bool ReadMetadata();
+	bool WriteMetadata();
 public:
 	bool ReadFile();
 	bool Convert();

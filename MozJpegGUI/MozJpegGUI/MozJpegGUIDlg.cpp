@@ -510,13 +510,14 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 
 
 	ASSERT(m_pProgressDlg == NULL);
-	m_pProgressDlg = new CProgressDlg();
+	m_pProgressDlg = new CProgressDlg(this);
 	m_pProgressDlg->m_pParent = this;
 	m_pProgressDlg->m_OutputDir = outputDir;
 	m_pProgressDlg->m_fOverwrite = m_CtrlCheckOverwrite.GetCheck() == BST_CHECKED;
 	m_pProgressDlg->m_Options = CreateOptions();
 	m_pProgressDlg->m_fCopyIfSmaller = m_CtrlCheckCopyIfSmaller.GetCheck() == BST_CHECKED;
 	m_pProgressDlg->m_fSaveToOriginalDir = saveToOriginalFolder;
+	m_pProgressDlg->m_fKeepMetadata = m_CtrlCheckKeepMetadata.GetCheck() == BST_CHECKED;
 
 	SYSTEM_INFO sysInfo;
 	GetNativeSystemInfo(&sysInfo);
