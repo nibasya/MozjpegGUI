@@ -57,9 +57,7 @@ UINT CConvert::Main()
 			throw EConvertError::EIgnore;
 
 		CConvertLock lockCPU(m_pParent->m_SyncAbort, m_pParent->m_pSyncCPU);
-		if (m_pParent->m_fKeepMetadata) {
-			ReadMetadata();
-		}
+		ReadMetadata();
 
 		if (!Convert()) {
 			_RPTFT0(_T("Aborting from Convert()\n"));
@@ -81,11 +79,9 @@ UINT CConvert::Main()
 			m_InData = NULL;
 			m_OutSize = m_InSize;
 		}
-		if (m_pParent->m_fKeepMetadata) {
-			if (!WriteMetadata()) {
-				_RPTFT0(_T("Aborting from WriteMetadata()\n"));
-				throw EConvertError::EIgnore;
-			}
+		if (!WriteMetadata()) {
+			_RPTFT0(_T("Aborting from WriteMetadata()\n"));
+			throw EConvertError::EIgnore;
 		}
 		if (!WriteFile()) {
 			_RPTFT0(_T("Aborting from WriteFile()\n"));

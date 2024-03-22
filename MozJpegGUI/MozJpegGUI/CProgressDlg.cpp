@@ -27,7 +27,7 @@ IMPLEMENT_DYNAMIC(CProgressDlg, CDialogEx)
 CProgressDlg::CProgressDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_PROGRESS_DIALOG, pParent), m_pParent(NULL), m_Paused(false), m_fComplete(false), m_CompletedCount(0), m_StartCount(0), m_EndCount(0),
 	m_SyncAbort(0, TRUE), m_pSyncHDD(NULL), m_pSyncReadBuff(NULL), m_pSyncCPU(NULL),m_MaxCPU(1), m_MaxHDD(1), m_MaxReadBuff(1),
-	m_fOverwrite(false), m_fSaveToOriginalDir(false), m_Abort(false), m_hCompleteThread(NULL), m_fKeepMetadata(false), m_GdiPlusToken(NULL)
+	m_fOverwrite(false), m_fSaveToOriginalDir(false), m_Abort(false), m_hCompleteThread(NULL), m_GdiPlusToken(NULL)
 {
 }
 
@@ -78,19 +78,17 @@ void CProgressDlg::Start()
 	m_CtrlProgressReadBuffer.SetRange(0, m_MaxReadBuff);
 	m_CtrlProgressProgress.SetRange(0, m_EndCount);
 
-	if (m_fKeepMetadata) {
-		Gdiplus::GdiplusStartupInput gdiinput;
-		Gdiplus::Status status;
-		status = Gdiplus::GdiplusStartup(&m_GdiPlusToken, &gdiinput, NULL);
-		if (status != Gdiplus::Status::Ok) {
-			CString str;
-			if (!str.LoadString(IDS_ERR_FAILED_TO_START_GDIPLUS)) {
-				OutputDebugString(_T("Failed to load resource: IDS_ERR_FAILED_TO_START_GDIPLUS"));
-			}
-			MessageBox(str);
-			CloseDlg();
-			return;
+	Gdiplus::GdiplusStartupInput gdiinput;
+	Gdiplus::Status status;
+	status = Gdiplus::GdiplusStartup(&m_GdiPlusToken, &gdiinput, NULL);
+	if (status != Gdiplus::Status::Ok) {
+		CString str;
+		if (!str.LoadString(IDS_ERR_FAILED_TO_START_GDIPLUS)) {
+			OutputDebugString(_T("Failed to load resource: IDS_ERR_FAILED_TO_START_GDIPLUS"));
 		}
+		MessageBox(str);
+		CloseDlg();
+		return;
 	}
 
 	SetTimer(PROGRESS_UPDATE_TIMER, 100, NULL);

@@ -82,7 +82,6 @@ public:
 	bool m_Paused;
 	CMozJpegGUIDlg* m_pParent;
 	bool m_fCopyIfSmaller;
-	bool m_fKeepMetadata;
 
 	// internal members
 private:
