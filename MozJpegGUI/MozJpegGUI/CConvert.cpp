@@ -57,7 +57,21 @@ UINT CConvert::Main()
 			throw EConvertError::EIgnore;
 
 		CConvertLock lockCPU(m_pParent->m_SyncAbort, m_pParent->m_pSyncCPU);
-		ReadMetadata();
+
+		// check if the source file is jpeg file
+		bool isSrcJpg = false;
+		CString ext = PathFindExtension(m_Filename);
+		ext = ext.MakeUpper();
+		if (ext == _T(".JPEG") || ext == _T(".JPG")) {
+			isSrcJpg = true;
+		}
+
+		if (!isSrcJpg) {
+			if (!ReadMetadata()) {
+				_RPTFT0(_T("Aborting from ReadMetadata()\n"));
+				throw EConvertError::EIgnore;
+			}
+		}
 
 		if (!Convert()) {
 			_RPTFT0(_T("Aborting from Convert()\n"));
@@ -79,9 +93,11 @@ UINT CConvert::Main()
 			m_InData = NULL;
 			m_OutSize = m_InSize;
 		}
-		if (!WriteMetadata()) {
-			_RPTFT0(_T("Aborting from WriteMetadata()\n"));
-			throw EConvertError::EIgnore;
+		if(!isSrcJpg){
+			if (!WriteMetadata()) {
+				_RPTFT0(_T("Aborting from WriteMetadata()\n"));
+				throw EConvertError::EIgnore;
+			}
 		}
 		if (!WriteFile()) {
 			_RPTFT0(_T("Aborting from WriteFile()\n"));
@@ -470,6 +486,16 @@ void CConvert::Pause()
 	}
 }
 
+void CConvert::ErrorHelper(const TCHAR* _rptft0, const UINT ID, const TCHAR* resourceName, CString& additionalStr)
+{
+	CString str;
+	_RPTFT0(_rptft0);
+	if (!str.LoadString(ID)) {
+		OutputDebugString(CString(_T("Failed to load resource: ")) + resourceName);
+	}
+	m_pParent->MessageBox(str + additionalStr);
+}
+
 bool CConvert::ReadMetadata()
 {
 	using namespace Gdiplus;
@@ -478,24 +504,39 @@ bool CConvert::ReadMetadata()
 	const int maxPropTypeSize = 100;
 	WCHAR strPropType[maxPropTypeSize] = L"";
 	Status stat;
+	Bitmap* pBmp = NULL;
+	CString str;
 
-	// open file
-	Bitmap* pBmp = new Bitmap(m_Filename);
-	if (pBmp == NULL) {
-		MessageBox(NULL, _T("Failed to load file for GDI+"), NULL, MB_OK);
-		return false;
-	}
+	try {
+		// open file
+		pBmp = new Bitmap(m_Filename);
+		if (pBmp == NULL) {
+			ErrorHelper(_T("Failed to load file for GDI+\n"), IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS, _T("IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
 
-	// read props
-	stat = pBmp->GetPropertySize(&size, &m_MetaCount);
-	if (stat != Status::Ok) {
-		MessageBox(NULL, _T("Failed to get metadata size"), NULL, MB_OK);
-		return false;
+		// read props
+		stat = pBmp->GetPropertySize(&size, &m_MetaCount);
+		if (stat != Status::Ok) {
+			ErrorHelper(_T("Failed to get metadata size\n"), IDS_ERR_FAILED_TO_GET_METADATA_SIZE, _T("IDS_ERR_FAILED_TO_GET_METADATA_SIZE"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		m_pMetadata = (PropertyItem*)malloc(size);
+		if (m_pMetadata == NULL) {
+			ErrorHelper(_T("Not enough memory for metadata\n"), IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA, _T("IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		stat = pBmp->GetAllPropertyItems(size, m_MetaCount, m_pMetadata);
+		if (stat != Status::Ok) {
+			ErrorHelper(_T("Failed to read metadata\n"), IDS_ERR_FAILED_TO_READ_METADATA, _T("IDS_ERR_FAILED_TO_READ_METADATA"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
 	}
-	m_pMetadata = (PropertyItem*)malloc(size);
-	stat = pBmp->GetAllPropertyItems(size, m_MetaCount, m_pMetadata);
-	if (stat != Status::Ok) {
-		MessageBox(NULL, _T("Failed to read metadata"), NULL, MB_OK);
+	catch (EConvertError) {
+		delete pBmp;
+		pBmp = NULL;
+		free(m_pMetadata);
+		m_pMetadata = NULL;
 		return false;
 	}
 
@@ -518,7 +559,8 @@ int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
 	if (pImageCodecInfo == NULL)
 		return -1;  // Failure
 
-	GetImageEncoders(num, size, pImageCodecInfo);
+	if(GetImageEncoders(num, size, pImageCodecInfo) != Gdiplus::Status::Ok)
+		return -1;	// Failure
 
 	for (UINT j = 0; j < num; ++j)
 	{
@@ -543,68 +585,82 @@ bool CConvert::WriteMetadata()
 	const int maxPropTypeSize = 100;
 	WCHAR strPropType[maxPropTypeSize] = L"";
 	Status stat;
+	IStream* input = NULL;
+	Bitmap* pBmp = NULL;
+	IStream* output = NULL;
 
-	// open input memory
-	IStream* input = SHCreateMemStream(m_OutData, static_cast<UINT>(m_OutSize));
-	if (input == NULL) {
-		MessageBox(NULL, _T("Failed to create memory stream for input"), NULL, MB_OK);
-		return false;
-	}
-	// open image
-	Bitmap* pBmp = new Bitmap(input);
-	if (pBmp == NULL) {
-		MessageBox(NULL, _T("Failed to load file for GDI+"), NULL, MB_OK);
-		return false;
-	}
+	try {
+		// open input memory
+		input = SHCreateMemStream(m_OutData, static_cast<UINT>(m_OutSize));
+		if (input == NULL) {
+			ErrorHelper(_T("Failed to create memory stream for input\n"), IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_INPUT, _T("IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_INPUT"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		// open image
+		pBmp = new Bitmap(input);
+		if (pBmp == NULL) {
+			ErrorHelper(_T("Failed to load file for GDI+\n"), IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS, _T("IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
 
-	// write props
-	for (UINT count = 0; count < m_MetaCount; count++) {
-		stat = pBmp->SetPropertyItem(m_pMetadata+count);
-		if (stat != Status::Ok) {
-			MessageBox(NULL, _T("Failed to write metadata"), NULL, MB_OK);
-			return false;
+		// write props
+		for (UINT count = 0; count < m_MetaCount; count++) {
+			stat = pBmp->SetPropertyItem(m_pMetadata + count);
+			if (stat != Status::Ok) {
+				ErrorHelper(_T("Failed to set metadata\n"), IDS_ERR_FAILED_TO_SET_METADATA, _T("IDS_ERR_FAILED_TO_SET_METADATA"), m_Outputname);
+				throw EConvertError::EIgnore;
+			}
+		}
+
+		// save file
+		output = SHCreateMemStream(NULL, 0);
+		if (output == NULL) {
+			ErrorHelper(_T("Failed to create memory stream for output\n"), IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_OUTPUT, _T("IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_OUTPUT"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		CLSID  encoderClsid;
+		if (GetEncoderClsid(_T("image/jpeg"), &encoderClsid) < 0) {
+			ErrorHelper(_T("image/jpeg encoder not installed for GDI+\n"), IDS_ERR_IMAGE_JPEG_ENCODER_NOT_INSTALLED_FOR_GDIPLUS, _T("IDS_ERR_IMAGE_JPEG_ENCODER_NOT_INSTALLED_FOR_GDIPLUS"), CString());
+			throw EConvertError::EIgnore;
+		};
+		if (pBmp->Save(output, &encoderClsid) != Gdiplus::Status::Ok) {
+			ErrorHelper(_T("Failed to write metadata\n"), IDS_ERR_FAILED_TO_WRITE_METADATA, _T("IDS_ERR_FAILED_TO_WRITE_METADATA"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+
+		// copy output data into m_Outdata
+		free(m_OutData);
+		STATSTG statStg;
+		if (output->Stat(&statStg, STATFLAG::STATFLAG_NONAME) != S_OK) {
+			ErrorHelper(_T("Failed to get status of the output stream"), IDS_ERR_FAILED_TO_GET_STATUS_OF_OUTPUT_STREAM, _T("IDS_ERR_FAILED_TO_GET_STATUS_OF_OUTPUT_STREAM"), m_Outputname);
+			throw EConvertError::EIgnore;
+		};
+		m_OutSize = statStg.cbSize.QuadPart;
+		m_OutData = reinterpret_cast<BYTE*>(malloc((size_t)m_OutSize));
+		if (m_OutData == NULL) {
+			ErrorHelper(_T("Not enough memory for metadata\n"), IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA, _T("IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		ULONG readSize;
+		LARGE_INTEGER beginning = { 0 };
+		if (output->Seek(beginning, STREAM_SEEK_SET, NULL) != S_OK) {
+			ErrorHelper(_T("Failed to seek output stream"), IDS_ERR_FAILED_TO_SEEK_OUTPUT_STREAM, _T("IDS_ERR_FAILED_TO_SEEK_OUTPUT_STREAM"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		HRESULT hRes;
+		if ((hRes = output->Read(m_OutData, (ULONG)m_OutSize, &readSize)) != S_OK) {
+			ErrorHelper(_T("Failed to read from output stream"), IDS_ERR_FAILED_TO_READ_FROM_OUTPUT_STREAM, _T("IDS_ERR_FAILED_TO_READ_FROM_OUTPUT_STREAM"), m_Outputname);
+			throw EConvertError::EIgnore;
+		}
+		if (readSize != m_OutSize) {
+			ErrorHelper(_T("Read size is not equal to stream size"), IDS_ERR_READ_SIZE_IS_NOT_EQUAL_TO_STREAM_SIZE, _T("IDS_ERR_READ_SIZE_IS_NOT_EQUAL_TO_STREAM_SIZE"), m_Outputname);
+			throw EConvertError::EIgnore;
 		}
 	}
-
-	// save file
-	IStream* output = SHCreateMemStream(NULL, 0);
-	if (output == NULL) {
-		MessageBox(NULL, _T("Failed to create memory stream for output"), NULL, MB_OK);
-		return false;
-	}
-	CLSID  encoderClsid;
-	if (GetEncoderClsid(_T("image/jpeg"), &encoderClsid) < 0) {
-		MessageBox(NULL, _T("image/jpeg encoder not installed for GDI+"), NULL, MB_OK);
-		return false;
-	};
-	pBmp->Save(output, &encoderClsid);
-
-	// copy output data into m_Outdata
-	free(m_OutData);
-	STATSTG statStg;
-	if (output->Stat(&statStg, STATFLAG::STATFLAG_NONAME) != S_OK) {
-		MessageBox(NULL, _T("Failed to get status of the output stream"), NULL, MB_OK);
-		return false;
-	};
-	m_OutSize = statStg.cbSize.QuadPart;
-	m_OutData = reinterpret_cast<BYTE*>(malloc((size_t)m_OutSize));
-	if (m_OutData == NULL) {
-		MessageBox(NULL, _T("Not enough memory for outstream"), NULL, MB_OK);
-		return false;
-	}
-	ULONG readSize;
-	LARGE_INTEGER beginning = { 0 };
-	if (output->Seek(beginning, STREAM_SEEK_SET, NULL) != S_OK) {
-		MessageBox(NULL, _T("Failed to seek output stream"), NULL, MB_OK);
-		return false;
-	}
-	HRESULT hRes;
-	if ((hRes = output->Read(m_OutData, (ULONG)m_OutSize, &readSize)) != S_OK) {
-		MessageBox(NULL, _T("Failed to read from output stream"), NULL, MB_OK);
-		return false;
-	}
-	if (readSize != m_OutSize) {
-		MessageBox(NULL, _T("Read size is not equal to stream size"), NULL, MB_OK);
+	catch (EConvertError) {
+		input->Release();
+		delete pBmp;
+		output->Release();
 		return false;
 	}
 

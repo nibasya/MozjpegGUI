@@ -26,6 +26,7 @@ private:
 	void Pause();
 	bool ReadMetadata();
 	bool WriteMetadata();
+	void ErrorHelper(const TCHAR* _rptft0, const UINT ID, const TCHAR* resourceName, CString& additionalStr);
 public:
 	bool ReadFile();
 	bool Convert();
