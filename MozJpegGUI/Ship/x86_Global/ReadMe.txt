@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.3
-    File name: MozJpegGUI_1_3_x86_Global.zip
+      Version: 1.4
+    File name: MozJpegGUI_1_4_x86_Global.zip
        Author: Dona
   Verified OS: Windows10 Professional
    Minimum OS: Windows10 and later
@@ -10,7 +10,7 @@ Software type: Freeware
  Reproduction: Prohibited.
        e-mail: nibasha@hotmail.com
 ==========================================================================
-Copyright(c) 2022 Dona All rights reserved. 
+Copyright(c) 2024 Dona All rights reserved. 
 
 1. What can this software do?
  This software is a high-speed image-file-to-jpeg-converter which can handle massive number of image files with high-quality and high-compression rate. Main point of the software is its multi-thread capability. When you are converting several hundreds image files, this makes a big difference to other software which converts one file at a time.
@@ -30,19 +30,27 @@ Copyright(c) 2022 Dona All rights reserved.
  Uncompress the files into any folder you want. By double-clicking MozJpegGUI.exe, you can start the software. The software does not have installer at this moment.
 
 4. Uninstallation method
- Remove the files which you have uncompressed in the “Installation method”.
+ Remove the files which you have uncompressed in the "Installation method".
 
 5. How to use
  a) Execute MozJpegGUI.exe
- b) Drag-and-drop the files which you want to convert into white area of the software. Or, click “Add from folder” button and select the folder which includes the files which you want to convert. Note: on selecting the folder, files does not appear in the dialog box. This is a specification of the Windows.
- c) Click “Browse” button and select folder to output the converted files.
- d) Change conversion settings by checking “Use Smaller” checkbox, “Overwrite” checkbox, Quality, and so on. These settings are stored when you close the software or when you change setting set from “Manage settings”.
- e) If you are ready to convert, press “Convert” button and start conversion.
- f) A progress dialog appears. Wait until its progress becomes 100%. In the dialog, the “Input buffer” shows amount of input files which are read into memory, the “CPU” shows number of conversions which are running. If both “Input buffer” and “CPU” are close to 0, then the bottleneck is reading of the file from storage. If CPU is close to 100%, then the bottleneck is CPU; which means the computer is working at its full spec.
+ b) Drag-and-drop the files which you want to convert into white area of the software. Or, click "Add from folder" button and select the folder which includes the files which you want to convert. Note: on selecting the folder, files does not appear in the dialog box. This is a specification of the Windows.
+ c) Click "Browse" button and select folder to output the converted files.
+ d) Change conversion settings by checking "Use Smaller" checkbox, "Overwrite" checkbox, Quality, and so on. These settings are stored when you close the software or when you change setting set from "Manage settings".
+ e) If you are ready to convert, press "Convert" button and start conversion.
+ f) A progress dialog appears. Wait until its progress becomes 100%. In the dialog, the "Input buffer" shows amount of input files which are read into memory, the "CPU" shows number of conversions which are running. If both "Input buffer" and "CPU" are close to 0, then the bottleneck is reading of the file from storage. If CPU is close to 100%, then the bottleneck is CPU; which means the computer is working at its full spec.
  g) When the conversion is completed, a message showing the completion will be shown.
- h) If you want to continue the conversion with other sets of the files, push “Clear” button, and start again from b).
+ h) If you want to continue the conversion with other sets of the files, push "Clear" button, and start again from b).
 
 6. History
+ Ver. 1.4:
+  1. Updated following libraries used internally:
+     zlib 1.2.11 -> 1.3
+     libpng 1637 -> 1640
+     mozjpeg 3.3.1 -> 4.1.1
+  2. Some common metadata will be now copied from image other than .jpg (ex. png).
+     For jpg, all metadata is copied.
+  3. Less chance of crush when reading .gif.
  Ver. 1.3:
   1. Added functionality to save the images into the save folder as the original one.
   2. Fixed issue: Some texts in the GUI was hidden.
@@ -72,7 +80,7 @@ English:
 
     As this software uses mozjpeg, libpng and zlib libraries, sub-module of
     the software inherites their licenses as shown in license.md.
-　
+
 Japanese:
     本ソフトウェアの各ファイルの著作権は、作者に属します。
     
@@ -89,7 +97,7 @@ Japanese:
     
 　　本ソフトウェアはIndependent JPEG Groupの成果の一部を使用しております。
 
-　　本ソフトウェアはmozjpeg、libpng、zlibの各ライブラリを使用しており
-　　ます。そのため、license.mdに記載の条項を各ライブラリ部分について継承します。
+　　本ソフトウェアはmozjpeg、libpng、zlibの各ライブラリを使用しております。
+　　そのため、license.mdに記載の条項を各ライブラリ部分について継承します。
 
 

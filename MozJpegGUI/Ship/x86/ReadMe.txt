@@ -1,7 +1,7 @@
 ==========================================================================
 【  ソフト名  】MozJpegGUI
-【 バージョン 】1.3
-【 ファイル名 】MozJpegGUI_1_3_x86.zip
+【 バージョン 】1.4
+【 ファイル名 】MozJpegGUI_1_4_x86.zip
 【   作者名   】どな
 【ホームページ】http://donadona.hatenablog.jp/
 【動作確認機種】Windows10 Professional
@@ -11,7 +11,7 @@
 【    転載    】禁止
 【　 連絡先 　】nibasha@hotmail.com
 ==========================================================================
-Copyright(c) 2022 どな All rights reserved. 
+Copyright(c) 2024 どな All rights reserved. 
 
 【このソフトでできること】
 大量の画像ファイルを高速かつ高圧縮率でjpeg形式に変換する
@@ -73,6 +73,14 @@ Copyright(c) 2022 どな All rights reserved.
 　 ァイルの一覧をクリアしてから2.に戻ってください。
 
 【改訂履歴】
+Ver.1.4:
+　・内蔵ライブラリを更新。
+     zlib 1.2.11 -> 1.3
+     libpng 1637 -> 1640
+     mozjpeg 3.3.1 -> 4.1.1
+　・jpeg以外の形式から一部のメタデータをコピーするように変更。
+　　jpegからはすべてのメタデータをコピーする。
+　・.gif形式読み込み時にクラッシュする確率を低減。
 Ver.1.3:
 　・元ファイルと同じ場所にファイルを保存する機能を追加。
 　・英語版においてGUIの文字が一部隠れている問題を修正。
@@ -115,8 +123,8 @@ Ver.1.0:
 
     This software is based in part on the work of the Independent JPEG Group.
 
-　　本ソフトウェアはmozjpeg、libpng、zlibの各ライブラリを使用しており
-　　ます。そのため、license.mdに記載の条項を各ライブラリ部分について継承します。
+　　本ソフトウェアはmozjpeg、libpng、zlibの各ライブラリを使用しております。
+　　そのため、license.mdに記載の条項を各ライブラリ部分について継承します。
 
     As this software uses mozjpeg, libpng and zlib libraries, sub-module of
     the software inherites their licenses as shown in license.md.
