@@ -10,5 +10,7 @@
 // プリコンパイルするヘッダーをここに追加します
 #include "framework.h"
 #include <afxcontrolbars.h>
+#include "RPTT.h"
+#include "OutputDebugLog.h"
 
 #endif //PCH_H

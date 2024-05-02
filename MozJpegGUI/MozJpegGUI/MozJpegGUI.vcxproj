@@ -229,6 +229,7 @@
     <ClInclude Include="mozJpeg\jinclude.h" />
     <ClInclude Include="mozJpeg\jpegint.h" />
     <ClInclude Include="mozJpeg\jversion.h" />
+    <ClInclude Include="OutputDebugLog.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RPTT.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="mozJpeg\rdppm.cpp" />
     <ClCompile Include="mozJpeg\rdswitch.cpp" />
     <ClCompile Include="mozJpeg\rdtarga.cpp" />
+    <ClCompile Include="OutputDebugLog.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
