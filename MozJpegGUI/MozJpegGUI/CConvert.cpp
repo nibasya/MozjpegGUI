@@ -36,6 +36,8 @@ CConvert::CConvert(CProgressDlg* pParent, CString& fileName, CString& outDir, CS
 
 UINT __cdecl CConvert::MainThread(LPVOID pData)
 {
+	OutputDebugLog(_T("Starting CConvert::MainThread\n"));
+
 	UINT ret;
 	ret = static_cast<CConvert*>(pData)->Main();
 	delete static_cast<CConvert*>(pData);
@@ -45,6 +47,7 @@ UINT __cdecl CConvert::MainThread(LPVOID pData)
 
 UINT CConvert::Main()
 {
+	OutputDebugLog(_T("Starting CConvert::Main\n"));
 	try {
 		if (!ReadFile()) {
 			_RPTFT0(_T("Aborting from ReadFile()\n"));
@@ -56,7 +59,11 @@ UINT CConvert::Main()
 		if(!m_pParent->AddThread())
 			throw EConvertError::EIgnore;
 
+		OutputDebugLog(_T("Try to obtain convertion resource\n"));
+
 		CConvertLock lockCPU(m_pParent->m_SyncAbort, m_pParent->m_pSyncCPU);
+
+		OutputDebugLog(_T("Obtained convertion resource\n"));
 
 		// check if the source file is jpeg file
 		bool isSrcJpg = false;
@@ -81,6 +88,8 @@ UINT CConvert::Main()
 		lockCPU.Unlock();
 
 		if (m_pParent->m_fCopyIfSmaller && m_OutSize > m_InSize) {
+			OutputDebugLog(_T("As converted data is larger than the input, discarding converted data\n"));
+
 			size_t outlen = m_Filename.GetLength() + 5 + m_OutDir.GetLength();
 			TCHAR* out = new TCHAR[outlen];
 			_tcscpy_s(out, outlen, m_OutDir);
@@ -126,9 +135,14 @@ UINT CConvert::Main()
 		}
 	}
 	catch (CJpegException e) {
+		OutputDebugLog(_T("Captured CJpegException\n"));
+
 		m_pParent->m_Paused = true;
 		CString str;
-		str.Format(_T("Error code %d: %s"), e.e, e.str);
+		str.Format(_T("Error code %d: %s"), e.e, e.str.GetBuffer());
+	
+		OutputDebugLog(str + _T("\n"));
+
 		MessageBox(m_pParent->m_hWnd, str, _T("Error"), MB_OK);
 		if (m_InData) {
 			free(m_InData);
@@ -144,6 +158,9 @@ UINT CConvert::Main()
 	m_pMetadata = NULL;
 
 	m_pParent->ThreadEnd(m_pThread);
+	
+	OutputDebugLog(CString(_T("Completed convertion thread: ")) + m_Filename + _T("\n"));
+
 	return 0;
 }
 
@@ -155,7 +172,12 @@ bool CConvert::ReadFile()
 
 	HANDLE hFileRead = INVALID_HANDLE_VALUE;
 
+	OutputDebugLog(_T("Try to obtain readfile resource\n"));
+
 	CConvertLock lock(m_pParent->m_SyncAbort, m_pParent->m_pSyncHDD);
+
+	OutputDebugLog(_T("Obtained readfile resource\n"));
+	OutputDebugLog(_T("Reading input file to memory: ") + m_Filename + _T("\n"));
 
 	try {
 		retry = true;
@@ -258,10 +280,14 @@ bool CConvert::ReadFile()
 
 		switch (e) {
 		case EConvertError::EAbort:
+			OutputDebugLog(_T("Exception during read file: EAbort\n"));
+
 			m_pParent->Abort();
 			return false;
 			break;
 		case EConvertError::EIgnore:
+			OutputDebugLog(_T("Exception during read file: EIgnore\n"));
+
 			return false;
 			break;
 		}
@@ -273,6 +299,8 @@ bool CConvert::ReadFile()
 
 bool CConvert::Convert()
 {
+	OutputDebugLog(_T("Creating args for convertion\n"));
+
 	int argc;
 	void** argv;
 	int ret;
@@ -280,7 +308,13 @@ bool CConvert::Convert()
 	CJpeg jpeg;
 	jpeg.m_pSyncAbort = &m_pParent->m_SyncAbort;
 	jpeg.m_Paused = &m_pParent->m_Paused;
+
+	OutputDebugLog(_T("Start convertion\n"));
+
 	ret = jpeg.cjpeg_main(argc, (char**)argv);
+
+	OutputDebugLog(_T("Completed convertion\n"));
+
 	int i;
 	for (i = 0; i < argc; i++) {
 		delete[] argv[i];
@@ -294,7 +328,11 @@ bool CConvert::Convert()
 
 bool CConvert::WriteFile()
 {
+	OutputDebugLog(_T("Try to obtain writefile resource\n"));
+
 	CConvertLock lock(m_pParent->m_SyncAbort, m_pParent->m_pSyncHDD);
+
+	OutputDebugLog(_T("Obtained writefile resource\n"));
 
 	HANDLE hFileWrite = INVALID_HANDLE_VALUE;
 	CString str;
@@ -303,6 +341,9 @@ bool CConvert::WriteFile()
 	try {
 		retry = true;
 		if (m_pParent->m_fOverwrite) {
+
+			OutputDebugLog(CString(_T("Create / Overwriting file: ")) + m_Outputname + _T("\n"));
+
 			while (retry) {
 				hFileWrite = CreateFile(m_Outputname, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				if (hFileWrite != INVALID_HANDLE_VALUE) {
@@ -310,6 +351,8 @@ bool CConvert::WriteFile()
 				}
 				else {
 					_RPTTN(_T("Failed to create/overwrite output file: %s\n"), m_Outputname);
+					OutputDebugLog(CString(_T("Failed to create/overwrite output file: ")) + m_Outputname + _T("\n"));
+
 					if (!str.LoadString(IDS_ERR_FAILED_TO_OVERWRITE_OUTPUT_FILE)) {
 						OutputDebugString(_T("Failed to load resource: IDS_ERR_FAILED_TO_OVERWRITE_OUTPUT_FILE"));
 					}
@@ -328,12 +371,16 @@ bool CConvert::WriteFile()
 		}
 		else {
 			while (retry) {
+				OutputDebugLog(CString(_T("Creating new file: \n")) + m_Outputname);
+
 				hFileWrite = CreateFile(m_Outputname, GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 				if (hFileWrite != INVALID_HANDLE_VALUE) {
 					break;
 				}
 				else {
 					_RPTTN(_T("Failed to create output file: %s\n"), m_Outputname);
+					OutputDebugLog(CString(_T("Failed to create new output file: ")) + m_Outputname + _T("\n"));
+
 					if (!str.LoadString(IDS_ERR_FAILED_TO_CREATE_OUTPUT_FILE)) {
 						OutputDebugString(_T("Failed to load resource: IDS_ERR_FAILED_TO_CREATE_OUTPUT_FILE"));
 					}
@@ -355,9 +402,14 @@ bool CConvert::WriteFile()
 		LONGLONG writePos=0;
 		do {
 			Pause();
+
+			OutputDebugLog(_T("Start writing to the file\n"));
+
 			DWORD writeSize = (m_OutSize - writePos) > DWORD_MAX ? DWORD_MAX : static_cast<DWORD>(m_OutSize - writePos);
 			if (::WriteFile(hFileWrite, m_OutData + writePos, writeSize, &writefilesize, NULL) != TRUE) {
 				_RPTFT0(_T("Failed to write output file\n"));
+				OutputDebugLog(CString(_T("Failed to write the output file: ")) + m_Outputname + _T("\n"));
+
 				if (!str.LoadString(IDS_ERR_FAILED_TO_WRITE_FILE)) {
 					OutputDebugString(_T("Failed to load resource: IDS_ERR_FAILED_TO_WRITE_FILE"));
 				}
@@ -372,6 +424,7 @@ bool CConvert::WriteFile()
 		free(m_OutData);
 		m_OutData = NULL;
 		_RPTTN(_T("Closed write file: %s\n"), m_Outputname);
+		OutputDebugLog(CString(_T("Completed writing output file: ")) + m_Outputname + _T("\n"));
 	}
 	catch (EConvertError e) {
 		if (m_OutData != NULL) {
@@ -385,10 +438,14 @@ bool CConvert::WriteFile()
 
 		switch (e) {
 		case EConvertError::EAbort:
+			OutputDebugLog(_T("Exception catched in write file: EAbort\n"));
+
 			m_pParent->Abort();
 			return false;
 			break;
 		case EConvertError::EIgnore:
+			OutputDebugLog(_T("Exception catched in write file: EIgnore\n"));
+
 			return false;
 			break;
 		}
@@ -488,6 +545,8 @@ void CConvert::Pause()
 
 void CConvert::ErrorHelper(const TCHAR* _rptft0, const UINT ID, const TCHAR* resourceName, CString& additionalStr)
 {
+	OutputDebugLog(_rptft0);
+
 	CString str;
 	_RPTFT0(_rptft0);
 	if (!str.LoadString(ID)) {
@@ -499,6 +558,8 @@ void CConvert::ErrorHelper(const TCHAR* _rptft0, const UINT ID, const TCHAR* res
 bool CConvert::ReadMetadata()
 {
 	using namespace Gdiplus;
+
+	OutputDebugLog(_T("Start reading metadata\n"));
 
 	UINT size = 0;
 	const int maxPropTypeSize = 100;
@@ -541,11 +602,16 @@ bool CConvert::ReadMetadata()
 	}
 
 	delete pBmp;
+
+	OutputDebugLog(_T("Completed reading metadata\n"));
+
 	return true;
 }
 
 int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
 {
+	OutputDebugLog(_T("Getting encoder class ID\n"));
+
 	UINT  num = 0;          // number of image encoders
 	UINT  size = 0;         // size of the image encoder array in bytes
 
@@ -568,16 +634,24 @@ int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
 		{
 			*pClsid = pImageCodecInfo[j].Clsid;
 			free(pImageCodecInfo);
+
+			OutputDebugLog(_T("Obtained encoder class ID\n"));
+
 			return j;  // Success
 		}
 	}
 
 	free(pImageCodecInfo);
+
+	OutputDebugLog(_T("Failed to obtain encoder class ID\n"));
+
 	return -1;  // Failure
 }
 
 bool CConvert::WriteMetadata()
 {
+	OutputDebugLog(_T("Start writing metadata\n"));
+
 	using namespace Gdiplus;
 
 	UINT size = 0;
@@ -591,12 +665,16 @@ bool CConvert::WriteMetadata()
 
 	try {
 		// open input memory
+		OutputDebugLog(_T("Opening input memory\n"));
+
 		input = SHCreateMemStream(m_OutData, static_cast<UINT>(m_OutSize));
 		if (input == NULL) {
 			ErrorHelper(_T("Failed to create memory stream for input\n"), IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_INPUT, _T("IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_INPUT"), m_Outputname);
 			throw EConvertError::EIgnore;
 		}
 		// open image
+		OutputDebugLog(_T("Opening input image\n"));
+
 		pBmp = new Bitmap(input);
 		if (pBmp == NULL) {
 			ErrorHelper(_T("Failed to load file for GDI+\n"), IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS, _T("IDS_ERR_FAILED_TO_LOAD_FILE_FOR_GDIPLUS"), m_Outputname);
@@ -604,6 +682,8 @@ bool CConvert::WriteMetadata()
 		}
 
 		// write props
+		OutputDebugLog(_T("Writing properties\n"));
+
 		for (UINT count = 0; count < m_MetaCount; count++) {
 			stat = pBmp->SetPropertyItem(m_pMetadata + count);
 			if (stat != Status::Ok) {
@@ -613,6 +693,8 @@ bool CConvert::WriteMetadata()
 		}
 
 		// save file
+		OutputDebugLog(_T("Saving file\n"));
+
 		output = SHCreateMemStream(NULL, 0);
 		if (output == NULL) {
 			ErrorHelper(_T("Failed to create memory stream for output\n"), IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_OUTPUT, _T("IDS_ERR_FAILED_TO_CREATE_MEMORY_STREAM_FOR_OUTPUT"), m_Outputname);
@@ -629,6 +711,8 @@ bool CConvert::WriteMetadata()
 		}
 
 		// copy output data into m_Outdata
+		OutputDebugLog(_T("Copying generated data (with metadata) into write file buffer\n"));
+
 		free(m_OutData);
 		STATSTG statStg;
 		if (output->Stat(&statStg, STATFLAG::STATFLAG_NONAME) != S_OK) {
@@ -658,6 +742,8 @@ bool CConvert::WriteMetadata()
 		}
 	}
 	catch (EConvertError) {
+		OutputDebugLog(_T("Failed to write metadata\n"));
+
 		input->Release();
 		delete pBmp;
 		output->Release();
@@ -667,5 +753,8 @@ bool CConvert::WriteMetadata()
 	input->Release();
 	delete pBmp;
 	output->Release();
+
+	OutputDebugLog(_T("Completed writing metadata\n"));
+
 	return true;
 }

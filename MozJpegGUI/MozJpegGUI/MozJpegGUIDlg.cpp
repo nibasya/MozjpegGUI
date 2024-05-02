@@ -176,6 +176,8 @@ BOOL CMozJpegGUIDlg::PreTranslateMessage(MSG* pMsg)
 
 void CMozJpegGUIDlg::OnDropFiles(HDROP hDropInfo)
 {
+	OutputDebugLog(_T("Files are dropped into the software\n"));
+
 	// ファイルリストに追加。拡張子のチェック等は実際に開くときに確認。
 	UINT filenum = DragQueryFile(hDropInfo, -1, NULL, 0);	// ファイル数を取得
 	UINT i;
@@ -244,6 +246,8 @@ bool CMozJpegGUIDlg::CheckFileExtern(CString filename)
 
 void CMozJpegGUIDlg::OnDestroy()
 {
+	OutputDebugLog(_T("Closing MozJpegGUI\n"));
+
 	// If processing image, ask if it is ok to quit
 	if (m_pProgressDlg != NULL) {
 		CString str;
@@ -263,12 +267,16 @@ void CMozJpegGUIDlg::OnDestroy()
 		m_CtrlListFileList.DeleteString(0);
 	}
 
+	OutputDebugLog(_T("Closed MozJpegGUI\n"));
+
 	CDialogEx::OnDestroy();
 }
 
 
 void CMozJpegGUIDlg::OnBnClickedButtonClear()
 {
+	OutputDebugLog(_T("Clicked clear button\n"));
+
 	while (m_CtrlListFileList.GetCount() > 0) {
 		delete static_cast<CString*>(m_CtrlListFileList.GetItemDataPtr(0));
 		m_CtrlListFileList.DeleteString(0);
@@ -278,6 +286,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonClear()
 
 void CMozJpegGUIDlg::OnBnClickedButtonAddfolder()
 {
+	OutputDebugLog(_T("Clicked button addfolder\n"));
+
 	IFileDialog* pDialog = NULL;
 	HRESULT hr;
 	DWORD options;
@@ -414,11 +424,15 @@ void CMozJpegGUIDlg::OnBnClickedButtonAddfolder()
 		}
 		MessageBox(str);
 	}
+
+	OutputDebugLog(_T("Completed adding folder\n"));
 }
 
 
 void CMozJpegGUIDlg::OnBnClickedButtonSaveto()
 {
+	OutputDebugLog(_T("Clicked button SaveTo\n"));
+
 	IFileDialog* pDialog = NULL;
 	HRESULT hr;
 	DWORD options;
@@ -467,6 +481,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonSaveto()
 
 void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 {
+	OutputDebugLog(_T("Convert button is clicked\n"));
+
 	if (m_CtrlListFileList.GetCount() == 0) {
 		CString str;
 		if (!str.LoadString(IDS_ERR_FILE_NOT_SELECTED)) {
@@ -505,6 +521,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 		delete[] outBuff;
 	}
 
+	OutputDebugLog(_T("Convert environment check completed\n"));
+
 	m_CtrlButtonConvert.EnableWindow(FALSE);
 
 
@@ -528,6 +546,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 		m_pProgressDlg->m_FileList.push_back(*static_cast<CString*>(m_CtrlListFileList.GetItemDataPtr(i)));
 	}
 
+	OutputDebugLog(_T("Convert target is set\n"));
+
 	m_pProgressDlg->Create(IDD_PROGRESS_DIALOG);
 	m_pProgressDlg->ShowWindow(SW_SHOW);
 	m_pProgressDlg->Start();
@@ -536,6 +556,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 
 void CMozJpegGUIDlg::ReadSetting()
 {
+	OutputDebugLog(_T("Reading general setting\n"));
+
 	CWinApp* p = AfxGetApp();
 	int outputDebugLog;
 	outputDebugLog = p->GetProfileInt(_T("Common"), _T("Output debug log"), 0);
@@ -557,6 +579,8 @@ void CMozJpegGUIDlg::ReadSetting()
 
 void CMozJpegGUIDlg::SaveSetting()
 {
+	OutputDebugLog(_T("Saving setting\n"));
+
 	CWinApp* p = AfxGetApp();
 	p->WriteProfileInt(_T("Common"), _T("Default setting"), m_CurrentSetting);
 	OnBnClickedButtonSettingSave();
@@ -565,6 +589,8 @@ void CMozJpegGUIDlg::SaveSetting()
 
 void CMozJpegGUIDlg::CreateInitialSetting()
 {
+	OutputDebugLog(_T("Create initial setting\n"));
+
 	CString sec;
 	for (int i = 0; i < 3; i++) {
 		sec.Format(_T("%d"), i);
@@ -598,10 +624,15 @@ void CMozJpegGUIDlg::CreateInitialSettingSub(int num)
 
 void CMozJpegGUIDlg::OnBnClickedButtonSettingLoad()
 {
+	OutputDebugLog(_T("Reading individual settings "));
+
 	int num = m_SelectedSetting;
 	CWinApp* p = AfxGetApp();
 	CString sec;
 	sec.Format(_T("%d"), num);
+
+	OutputDebugLog(sec + _T("\n"));
+
 	CString buff;
 	buff.Format(_T("%d"), p->GetProfileInt(sec, _T("Quality"), 75));
 	m_CtrlEditQuality.SetWindowText(buff);
@@ -624,10 +655,15 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingLoad()
 
 void CMozJpegGUIDlg::OnBnClickedButtonSettingSave()
 {
+	OutputDebugLog(_T("Saving individual settings "));
+
 	int num = m_SelectedSetting;
 	CWinApp* p = AfxGetApp();
 	CString sec;
 	sec.Format(_T("%d"), num);
+
+	OutputDebugLog(sec + _T("\n"));
+
 	CString profName;
 	m_CtrlComboSetting.GetLBText(num, profName);
 	CString buff;
@@ -654,6 +690,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingSave()
 
 void CMozJpegGUIDlg::OnBnClickedButtonInitialize()
 {
+	OutputDebugLog(_T("Clicked initialize button\n"));
+
 	m_CtrlEditQuality.SetWindowText(_T("75"));
 	m_CtrlComboColor.SetCurSel(2);
 	m_CtrlComboCoding.SetCurSel(0);
@@ -671,6 +709,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonInitialize()
 
 int CMozJpegGUIDlg::InitSettingCombo()
 {
+	OutputDebugLog(_T("Initializing combo box for setting\n"));
+
 	const int MAXBUFF = 1024;
 	TCHAR buff[MAXBUFF];
 	TCHAR name[MAXBUFF];
@@ -733,6 +773,8 @@ int CMozJpegGUIDlg::InitSettingCombo()
 
 void CMozJpegGUIDlg::InitGUI()
 {
+	OutputDebugLog(_T("Initializing GUI\n"));
+
 	CString str;
 	VERIFY(m_CtrlToolTip.Create(this));
 	m_CtrlToolTip.Activate(TRUE);

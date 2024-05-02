@@ -65,6 +65,9 @@ void CProgressDlg::Start()
 	ASSERT(m_pSyncCPU == NULL);
 	ASSERT(m_pSyncHDD == NULL);
 	ASSERT(m_pSyncReadBuff == NULL);
+
+	OutputDebugLog(_T("Initializing progress dialog\n"));
+
 	m_pSyncCPU = new CSemaphoreWithCounter(m_MaxCPU, m_MaxCPU);
 	m_pSyncHDD = new CSemaphoreWithCounter(m_MaxHDD, m_MaxHDD);
 	m_pSyncReadBuff = new CSemaphoreWithCounter(m_MaxReadBuff, m_MaxReadBuff);
@@ -77,6 +80,8 @@ void CProgressDlg::Start()
 	m_CtrlProgressCPU.SetRange(0, m_MaxCPU);
 	m_CtrlProgressReadBuffer.SetRange(0, m_MaxReadBuff);
 	m_CtrlProgressProgress.SetRange(0, m_EndCount);
+
+	OutputDebugLog(_T("Initializing GDI+\n"));
 
 	Gdiplus::GdiplusStartupInput gdiinput;
 	Gdiplus::Status status;
@@ -91,6 +96,8 @@ void CProgressDlg::Start()
 		return;
 	}
 
+	OutputDebugLog(_T("Initializing progress dialog update timer\n"));
+
 	SetTimer(PROGRESS_UPDATE_TIMER, 100, NULL);
 	QueryPerformanceCounter(&m_StartTime);
 
@@ -103,8 +110,12 @@ bool CProgressDlg::AddThread()
 	static CCriticalSection ccs;
 	CSingleLock lock(&ccs, TRUE);
 
+
 	if (m_StartCount >= m_FileList.size()) {
 		if (!m_fComplete) {
+
+			OutputDebugLog(_T("Generating completion thread\n"));
+
 			CWinThread* pThread = AfxBeginThread(CompleteThread, this);
 			m_hCompleteThread = pThread->m_hThread;
 			m_fComplete = true;
@@ -118,6 +129,8 @@ bool CProgressDlg::AddThread()
 		PathCchRemoveFileSpec(outputDir.GetBuffer(), outputDir.GetAllocLength());
 		outputDir.ReleaseBuffer();
 	}
+
+	OutputDebugLog(CString(_T("Create thread for conversion: ")) + m_FileList[m_StartCount] + _T("\n"));
 
 	CConvert* pConv = new CConvert(this, m_FileList[m_StartCount], outputDir, m_Options);
 	_RPTTN(_T("Starting %s\n"), m_FileList[m_StartCount]);
@@ -140,6 +153,9 @@ bool CProgressDlg::AddThread()
 	lockThreadList.Unlock();
 
 	m_StartCount++;
+
+	OutputDebugLog(_T("Completed generation of thread\n"));
+
 	return true;
 }
 
@@ -154,12 +170,16 @@ bool CProgressDlg::ThreadEnd(CWinThread* pThread)
 
 void CProgressDlg::OnBnClickedButtonStop()
 {
+	OutputDebugLog(_T("Stop button of the progress dialog is pressed\n"));
+
 	OnClose();
 }
 
 
 void CProgressDlg::OnBnClickedButtonPause()
 {
+	OutputDebugLog(_T("Pause button of the progress dialog is pressed\n"));
+
 	CString str;
 	if (!m_Paused) {
 		if (!str.LoadString(IDS_BUTTON_RESUME)) {
@@ -168,6 +188,8 @@ void CProgressDlg::OnBnClickedButtonPause()
 		m_CtrlButtonPause.SetWindowText(str);
 //		m_CtrlButtonStop.EnableWindow(false);
 		m_Paused = true;
+
+		OutputDebugLog(_T("Pausing convertion\n"));
 	}
 	else {
 		if (!str.LoadString(IDS_BUTTON_PAUSE)) {
@@ -176,6 +198,8 @@ void CProgressDlg::OnBnClickedButtonPause()
 		m_CtrlButtonPause.SetWindowText(str);
 //		m_CtrlButtonStop.EnableWindow(true);
 		m_Paused = false;
+
+		OutputDebugLog(_T("Resuming convertion\n"));
 	}
 }
 
@@ -200,6 +224,8 @@ void CProgressDlg::OnClose()
 
 void CProgressDlg::Abort()
 {
+	OutputDebugLog(_T("Aborting convertion\n"));
+
 	m_Abort = true;
 	m_SyncAbort.SetEvent();
 	m_CtrlButtonPause.EnableWindow(FALSE);
@@ -218,6 +244,9 @@ void CProgressDlg::Abort()
 		}
 		m_hCompleteThread = NULL;
 	}
+
+	OutputDebugLog(_T("Generating abortion thread\n"));
+
 	AfxBeginThread(AbortThread, this);
 }
 
@@ -225,11 +254,16 @@ void CProgressDlg::Abort()
 // Thread for waiting abort completion
 UINT __cdecl CProgressDlg::AbortThread(LPVOID pData)
 {
+	OutputDebugLog(_T("Waiting for all threads to abort\n"));
+
 	CProgressDlg* pDlg = static_cast<CProgressDlg*>(pData);
 	while (!pDlg->m_ThreadList.empty()) {
 		Sleep(100);
 	}
 	pDlg->PostMessage(WM_USER_ABORT);
+
+	OutputDebugLog(_T("All threads aborted\n"));
+
 	return 0;
 }
 
@@ -242,6 +276,8 @@ LRESULT CProgressDlg::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 		CloseDlg();
 		return 0;
 	case WM_USER_COMPLETE:
+		OutputDebugLog(_T("Completed convertion\n"));
+
 		if (!str.LoadString(IDS_MSG_COMPLETE)) {
 			OutputDebugString(_T("Failed to load resource: IDS_MSG_COMPLETE"));
 		}
@@ -268,6 +304,8 @@ void CProgressDlg::OnCancel()
 
 void CProgressDlg::CloseDlg()
 {
+	OutputDebugLog(_T("Closing progress dialog\n"));
+
 	CDialogEx::OnClose();
 	KillTimer(PROGRESS_UPDATE_TIMER);
 	DestroyWindow();
@@ -280,6 +318,7 @@ void CProgressDlg::CloseDlg()
 	m_pSyncHDD = NULL;
 	delete m_pSyncReadBuff;
 	m_pSyncReadBuff = NULL;
+	OutputDebugLog(_T("Closed progress dialog\n"));
 
 	delete this;
 }

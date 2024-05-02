@@ -48,6 +48,9 @@
 #include "jversion.h"           /* for version message */
 #include "jconfigint.h"
 #include "../RPTT.h"
+#include "../OutputDebugLog.h"
+#include <atlbase.h>
+#include <atlconv.h>
 #include "cjpeg.h"
 
 //#ifdef _DEBUG
@@ -153,6 +156,8 @@ static void my_emit_message_fuzzer(j_common_ptr cinfo, int msg_level)
 
 cjpeg_source_ptr CJpeg::select_file_type(FILE* infile)
 {
+	OutputDebugLog(L"CJpeg::select_file_type\n");
+
 	int c;
 	ASSERT(infile != NULL);
 
@@ -316,6 +321,8 @@ int CJpeg::parse_switches(int argc, char** argv, int last_file_arg_seen, boolean
  * processing.
  */
 {
+	OutputDebugLog(L"CJpeg::parse_switches\n");
+
 	int argn;
 	char* arg;
 	boolean force_baseline;
@@ -750,6 +757,8 @@ int CJpeg::parse_switches(int argc, char** argv, int last_file_arg_seen, boolean
 
 void CJpeg::error_exit(j_common_ptr cinfo)
 {
+	OutputDebugLog(L"CJpeg::error_exit\n");
+
 	/* Always display the message */
 	(*cinfo->err->output_message) (cinfo);
 
@@ -768,6 +777,10 @@ void CJpeg::output_message(j_common_ptr cinfo)
 
 	/* Create the message */
 	(*cinfo->err->format_message) (cinfo, buffer);
+
+	OutputDebugLog(L"CJpeg: ");
+	OutputDebugLog(CString(CA2T(buffer)));
+	OutputDebugLog(L"\n");
 
 	_RPT1(_CRT_WARN, "%s\n",buffer);
 }
@@ -831,6 +844,7 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 	 * In particular, we don't yet know the input file's color space,
 	 * but we need to provide some value for jpeg_set_defaults() to work.
 	 */
+	OutputDebugLog(L"CJpeg::cjpeg_main initialize JPEG parameters\n");
 
 	m_cinfo.in_color_space = JCS_RGB; /* arbitrary guess */
 	jpeg_set_defaults(&m_cinfo);
@@ -857,6 +871,8 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 		ERREXIT(&m_cinfo, JERR_CJPEG_INPUT_NOT_SET);
 	}
 	
+	OutputDebugLog(L"CJpeg::cjpeg_main start reading file\n");
+
 	if (m_icc_filename != NULL) {
 		fopen_s(&icc_file, m_icc_filename, READ_BINARY);
 		if (icc_file == NULL) {
@@ -927,9 +943,13 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 #endif
 
 	/* Start compressor */
+	OutputDebugLog(L"CJpeg::cjpeg_main start compressor\n");
+
 	jpeg_start_compress(&m_cinfo, TRUE);
 
 	/* Copy metadata */
+	OutputDebugLog(L"CJpeg::cjpeg_main copy metadata\n");
+
 	if (m_copy_markers) {
 		jpeg_saved_marker_ptr marker;
 
@@ -965,6 +985,8 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 		jpeg_write_icc_profile(&m_cinfo, icc_profile, (unsigned int)icc_len);
 
 	/* Process data */
+	OutputDebugLog(L"CJpeg::cjpeg_main process data\n");
+
 	int count = 0;
 	while (m_cinfo.next_scanline < m_cinfo.image_height) {
 		while (*m_Paused) {
@@ -995,6 +1017,8 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 	}
 
 	/* Finish compression and release memory */
+	OutputDebugLog(L"CJpeg::cjpeg_main finish compression and release memory\n");
+
 	(*src_mgr->finish_input) (&m_cinfo, src_mgr);
 	jpeg_finish_compress(&m_cinfo);
 	jpeg_destroy_compress(&m_cinfo);
@@ -1011,6 +1035,8 @@ int CJpeg::cjpeg_main(int argc, char** argv)
 	free(icc_profile);
 
 	/* All done. */
+	OutputDebugLog(L"CJpeg::cjpeg_main complete\n");
+
 	return TRUE;                     /* suppress no-return-value warnings */
 }
 
