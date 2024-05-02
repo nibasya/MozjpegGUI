@@ -537,6 +537,15 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 void CMozJpegGUIDlg::ReadSetting()
 {
 	CWinApp* p = AfxGetApp();
+	int outputDebugLog;
+	outputDebugLog = p->GetProfileInt(_T("Common"), _T("Output debug log"), 0);
+	if (outputDebugLog == 1) {
+		TCHAR log[_MAX_PATH + 1];
+		_tcscpy_s(log, theApp.m_pszProfileName);
+		PathCchRenameExtension(log, _MAX_PATH + 1, _T(".log"));
+		OutputDebugString(CString(_T("Enabled logging. Log file: ") + CString(log) + CString(_T("\n"))));
+		OutputDebugLogInit(log);
+	}
 	int defNum;
 	defNum = p->GetProfileInt(_T("Common"), _T("Default setting"), 0);
 	m_CtrlComboSetting.SetCurSel(defNum);
