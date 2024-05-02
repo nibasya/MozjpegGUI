@@ -371,7 +371,7 @@ bool CConvert::WriteFile()
 		}
 		else {
 			while (retry) {
-				OutputDebugLog(CString(_T("Creating new file: \n")) + m_Outputname);
+				OutputDebugLog(CString(_T("Creating new file: ")) + m_Outputname + _T("\n"));
 
 				hFileWrite = CreateFile(m_Outputname, GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 				if (hFileWrite != INVALID_HANDLE_VALUE) {

@@ -111,7 +111,7 @@ BOOL CMozJpegGUIDlg::OnInitDialog()
 	InitGUI();
 	InitSettingCombo();
 	ReadSetting();
-	OnBnClickedButtonSettingLoad();
+
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
 
