@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.4
-    File name: MozJpegGUI_1_4_x86_Global.zip
+      Version: 1.5
+    File name: MozJpegGUI_1_5_x86_Global.zip
        Author: Dona
   Verified OS: Windows10 Professional
    Minimum OS: Windows10 and later
@@ -20,8 +20,8 @@ Copyright(c) 2024 Dona All rights reserved.
  c) You can save multiple conversion settings. So, you can modify the settings which fits to your purpose easily by simply selecting stored settings.
  d) The software can handle following input images:
     .bmp, .gif, .jpg, .jpeg, .png, .ppm, .tga
- e) You can add an image file by simply drag-and-drop the files, or by pushing gAdd from folderh button to add all image files from a folder.
- f) In some cases, the converted files might have larger file size. By checking gUse Smallerh checkbox, you can let the software cancel the conversion of the file and let it copy the source file into the result folder. This decision will be done for each individual file. The situation can happen when the source file was a monochrome file. As JPEG files are not capable for monochrome images, mozjpegGUI will convert them into grayscale images. As a result, the file size might increase.
+ e) You can add an image file by simply drag-and-drop the files, or by pushing  gAdd from folder h button to add all image files from a folder.
+ f) In some cases, the converted files might have larger file size. By checking  gUse Smaller h checkbox, you can let the software cancel the conversion of the file and let it copy the source file into the result folder. This decision will be done for each individual file. The situation can happen when the source file was a monochrome file. As JPEG files are not capable for monochrome images, mozjpegGUI will convert them into grayscale images. As a result, the file size might increase.
  g) Sorry for the people who uses ultra-high-spec CPUs, number of the logical CPU cores which the software can handle is expected to 64 due to Windows OS limitation. Some special treatment should be done in the software to avoid this limitation, but because such CPUs are expensive and I cannot buy and test them, there is no schedule for the software to implement such treatments.
  h) There are 32 bit version and 64 bit version of the software. The 32 bit version can work on both Windows 10 32 bit / 64 bit versions. The 64 bit version can work only on Windows 10 64 bit version, but seems to be about 8% faster than 32 bit version.
  i) This compression package is for 86 bit version.
@@ -43,6 +43,9 @@ Copyright(c) 2024 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push "Clear" button, and start again from b).
 
 6. History
+ Ver. 1.5:
+  1. The software will log detailed information by adding following line beneath [Common] in file: MozJpegGUI.ini
+     Output debug log=1
  Ver. 1.4:
   1. Updated following libraries used internally:
      zlib 1.2.11 -> 1.3
@@ -82,22 +85,22 @@ English:
     the software inherites their licenses as shown in license.md.
 
 Japanese:
-    –{ƒ\ƒtƒgƒEƒFƒA‚ÌŠeƒtƒ@ƒCƒ‹‚Ì’˜ìŒ ‚ÍAìŽÒ‚É‘®‚µ‚Ü‚·B
+     { \ t g E F A ÌŠe t @ C   Ì’  ìŒ  ÍA  Ò‚É‘    Ü‚  B
     
-    –{ƒ\ƒtƒgƒEƒFƒA‚ÍA’˜ìŒ ŽÒ‚¨‚æ‚ÑƒRƒ“ƒgƒŠƒrƒ…[ƒ^[‚É‚æ‚Á‚ÄuŒ»ó‚Ì‚Ü‚Üv
-@@’ñ‹Ÿ‚³‚ê‚Ä‚¨‚èA–¾Ž¦–ÙŽ¦‚ð–â‚í‚¸A¤‹Æ“I‚ÈŽg—p‰Â”\«A‚¨‚æ‚Ñ“Á’è‚Ì–Ú“I‚É
-@@‘Î‚·‚é“K‡«‚ÉŠÖ‚·‚éˆÃ–Ù‚Ì•ÛØ‚àŠÜ‚ßA‚Ü‚½‚»‚ê‚ÉŒÀ’è‚³‚ê‚È‚¢A‚¢‚©‚È‚é
-@@•ÛØ‚à‚ ‚è‚Ü‚¹‚ñB’˜ìŒ ŽÒ‚àƒRƒ“ƒgƒŠƒrƒ…[ƒ^[‚àAŽ–—R‚Ì‚¢‚©‚ñ‚ð–â‚í‚¸A
-@@‘¹ŠQ”­¶‚ÌŒ´ˆö‚¢‚©‚ñ‚ð–â‚í‚¸A‚©‚ÂÓ”C‚Ìª‹’‚ªŒ_–ñ‚Å‚ ‚é‚©ŒµŠiÓ”C‚Å‚ ‚é‚©
-@@i‰ßŽ¸‚»‚Ì‘¼‚Ìj•s–@sˆ×‚Å‚ ‚é‚©‚ð–â‚í‚¸A‰¼‚É‚»‚Ì‚æ‚¤‚È‘¹ŠQ‚ª”­¶‚·‚é
-@@‰Â”\«‚ð’m‚ç‚³‚ê‚Ä‚¢‚½‚Æ‚µ‚Ä‚àA–{ƒ\ƒtƒgƒEƒFƒA‚ÌŽg—p‚É‚æ‚Á‚Ä”­¶‚µ‚½i‘ã‘Ö
-@@•i‚Ü‚½‚Í‘ã—pƒT[ƒrƒX‚Ì’²’BAŽg—p‚Ì‘rŽ¸Aƒf[ƒ^‚Ì‘rŽ¸A—˜‰v‚Ì‘rŽ¸A‹Æ–±‚Ì
-@@’†’f‚àŠÜ‚ßA‚Ü‚½‚»‚ê‚ÉŒÀ’è‚³‚ê‚È‚¢j’¼Ú‘¹ŠQAŠÔÚ‘¹ŠQA‹ô”­“I‚È‘¹ŠQA“Á•Ê
-@@‘¹ŠQA’¦”±“I‘¹ŠQA‚Ü‚½‚ÍŒ‹‰Ê‘¹ŠQ‚É‚Â‚¢‚ÄAˆêØÓ”C‚ð•‰‚í‚È‚¢‚à‚Ì‚Æ‚µ‚Ü‚·B 
+     { \ t g E F A ÍA   ìŒ  Ò‚   ÑƒR   g   r   [ ^ [ É‚   Äu    Ì‚Ü‚Üv
+ @ @ ñ‹Ÿ‚   Ä‚   A     ÙŽ    í‚¸ A   Æ“I ÈŽg p Â”\   A    Ñ“   Ì–Ú“I  
+ @ @ Î‚   K     ÉŠÖ‚   Ã–Ù‚Ì•ÛØ‚ Ü‚ßA Ü‚     ÉŒ  è‚³  È‚  A     È‚ 
+ @ @ ÛØ‚    Ü‚   B   ìŒ  Ò‚ R   g   r   [ ^ [  A   R Ì‚       í‚¸ A
+ @ @   Q     ÌŒ           í‚¸ A   ÂÓ”C Ì      _  Å‚  é‚©   i Ó”C Å‚  é‚©
+ @ @ i ßŽ    Ì‘  Ìj s @ s ×‚Å‚  é‚©   í‚¸ A   É‚  Ì‚æ‚¤ È‘  Q          
+ @ @ Â”\    m ç‚³  Ä‚    Æ‚  Ä‚ A { \ t g E F A ÌŽg p É‚   Ä”        i   
+ @ @ i Ü‚  Í‘ p T [ r X Ì’  B A g p Ì‘r   A f [ ^ Ì‘r   A   v Ì‘r   A Æ–   
+ @ @   f  Ü‚ßA Ü‚     ÉŒ  è‚³  È‚  j   Ú‘  Q A ÔÚ‘  Q A    I È‘  Q A    
+ @ @   Q A     I   Q A Ü‚  ÍŒ  Ê‘  Q É‚Â‚  ÄA  ØÓ”C ð•‰‚ È‚   Ì‚Æ‚  Ü‚  B 
     
-@@–{ƒ\ƒtƒgƒEƒFƒA‚ÍIndependent JPEG Group‚Ì¬‰Ê‚Ìˆê•”‚ðŽg—p‚µ‚Ä‚¨‚è‚Ü‚·B
+ @ @ { \ t g E F A  Independent JPEG Group Ì  Ê‚Ìˆê•”  g p   Ä‚   Ü‚  B
 
-@@–{ƒ\ƒtƒgƒEƒFƒA‚ÍmozjpegAlibpngAzlib‚ÌŠeƒ‰ƒCƒuƒ‰ƒŠ‚ðŽg—p‚µ‚Ä‚¨‚è‚Ü‚·B
-@@‚»‚Ì‚½‚ßAlicense.md‚É‹LÚ‚Ìð€‚ðŠeƒ‰ƒCƒuƒ‰ƒŠ•”•ª‚É‚Â‚¢‚ÄŒp³‚µ‚Ü‚·B
+ @ @ { \ t g E F A  mozjpeg Alibpng Azlib ÌŠe   C u      g p   Ä‚   Ü‚  B
+ @ @   Ì‚  ßAlicense.md É‹L Ú‚Ì    e   C u         É‚Â‚  ÄŒp     Ü‚  B
 
 
