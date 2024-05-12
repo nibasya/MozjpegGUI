@@ -68,18 +68,40 @@ void CProgressDlg::Start()
 
 	OutputDebugLog(_T("Initializing progress dialog\n"));
 
-	m_pSyncCPU = new CSemaphoreWithCounter(m_MaxCPU, m_MaxCPU);
-	m_pSyncHDD = new CSemaphoreWithCounter(m_MaxHDD, m_MaxHDD);
-	m_pSyncReadBuff = new CSemaphoreWithCounter(m_MaxReadBuff, m_MaxReadBuff);
-	
-	m_CtrlProgressCPU.SetSmoothMove(false);
-	m_CtrlProgressReadBuffer.SetSmoothMove(false);
-	m_CtrlProgressProgress.SetSmoothMove(false);
+	try {
+		m_pSyncCPU = new CSemaphoreWithCounter(m_MaxCPU, m_MaxCPU);
+		m_pSyncHDD = new CSemaphoreWithCounter(m_MaxHDD, m_MaxHDD);
+		m_pSyncReadBuff = new CSemaphoreWithCounter(m_MaxReadBuff, m_MaxReadBuff);
+	}
+	catch (...) {
+		OutputDebugLog(_T("Failed to create CSemaphoreWithCounter:"));
+		if (m_pSyncCPU == NULL) {
+			OutputDebugLog(_T("SyncCPU\n"));
+		} else if (m_pSyncHDD == NULL) {
+			OutputDebugLog(_T("SyncHDD\n"));
+		} else if(m_pSyncReadBuff == NULL) {
+			OutputDebugLog(_T("SyncReadBuff\n"));
+		}
+		MessageBox(_T("Internal error: failed to create semaphore."));
+		Abort();
+		return;
+	}
+	try {
+		m_CtrlProgressCPU.SetSmoothMove(false);
+		m_CtrlProgressReadBuffer.SetSmoothMove(false);
+		m_CtrlProgressProgress.SetSmoothMove(false);
 
-	m_EndCount = static_cast<UINT>(m_FileList.size());
-	m_CtrlProgressCPU.SetRange(0, m_MaxCPU);
-	m_CtrlProgressReadBuffer.SetRange(0, m_MaxReadBuff);
-	m_CtrlProgressProgress.SetRange(0, m_EndCount);
+		m_EndCount = static_cast<UINT>(m_FileList.size());
+		m_CtrlProgressCPU.SetRange(0, m_MaxCPU);
+		m_CtrlProgressReadBuffer.SetRange(0, m_MaxReadBuff);
+		m_CtrlProgressProgress.SetRange(0, m_EndCount);
+	}
+	catch (...) {
+		OutputDebugLog(_T("Failed to set progress control property.\n"));
+		MessageBox(_T("Failed to set progress control property.\n"));
+		Abort();
+		return;
+	}
 
 	OutputDebugLog(_T("Initializing GDI+\n"));
 

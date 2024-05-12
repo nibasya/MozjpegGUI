@@ -538,7 +538,15 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 	SYSTEM_INFO sysInfo;
 	GetNativeSystemInfo(&sysInfo);
 	m_pProgressDlg->m_MaxCPU = sysInfo.dwNumberOfProcessors;
-	m_pProgressDlg->m_MaxReadBuff = sysInfo.dwNumberOfProcessors * 2;
+	OutputDebugLog(_T("Detected num of CPU: %d\n"), m_pProgressDlg->m_MaxCPU);
+	if (m_pProgressDlg->m_MaxCPU < 1) {
+		CString msg;
+		msg.Format(_T("Number of CPU is detected as %d, which is below 1. Setting it to 2."), m_pProgressDlg->m_MaxCPU);
+		MessageBox(msg);
+		m_pProgressDlg->m_MaxCPU = 2;
+		OutputDebugLog(_T("Num of CPU modified to: %d\n"), m_pProgressDlg->m_MaxCPU);
+	}
+	m_pProgressDlg->m_MaxReadBuff = m_pProgressDlg->m_MaxCPU * 2;
 	m_pProgressDlg->m_MaxHDD = 1;
 
 	int i;
@@ -546,7 +554,7 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 		m_pProgressDlg->m_FileList.push_back(*static_cast<CString*>(m_CtrlListFileList.GetItemDataPtr(i)));
 	}
 
-	OutputDebugLog(_T("Convert target is set\n"));
+	OutputDebugLog(_T("Convert target is set; num: %d\n"), m_pProgressDlg->m_FileList.size());
 
 	m_pProgressDlg->Create(IDD_PROGRESS_DIALOG);
 	m_pProgressDlg->ShowWindow(SW_SHOW);
