@@ -76,13 +76,21 @@ void OutputDebugLogInit(CString filename)
 	}
 }
 
-void OutputDebugLog(CString str)
+void OutputDebugLog(CString str, ...)
 {
 	if (!g_Init)
 		return;
-
+	
+	// generate output string
+	CString buff;
+	va_list list;
+	va_start(list, str);
+	buff.FormatV(str, list);
+	va_end(list);
+	
+	// write out the string
 	try {
-		g_Log.WriteString(str);
+		g_Log.WriteString(buff);
 		g_Log.Flush();
 	}
 	catch (const CFileException& e) {

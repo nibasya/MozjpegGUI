@@ -10,4 +10,4 @@ void OutputDebugLogInit(CString filename);
 /// Output debug log to a file.
 /// </summary>
 /// <param name="str">An text written to a file. \n is not automatically added.</param>
-void OutputDebugLog(CString str);
+void OutputDebugLog(CString str, ...);
