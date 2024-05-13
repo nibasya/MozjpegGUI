@@ -202,8 +202,11 @@ int CInfoProgressCtrl::SetState(int iState)
 ****************************************************************************/
 bool CInfoProgressCtrl::SetSmoothMove(const bool smooth)
 {
+	OutputDebugLog(_T("CInfoProgressCtrl::SetSmoothMove(%s) called.\n"), smooth?_T("true"):_T("false"));
+
 	bool ret = m_smoothMove;
 	m_smoothMove = smooth;
+	OutputDebugLog(_T("CInfoProgressCtrl::SetSmoothMove() returned %s.\n"), ret ? _T("true") : _T("false"));
 	return ret;
 }
 
@@ -215,18 +218,26 @@ bool CInfoProgressCtrl::SetSmoothMove(const bool smooth)
 ****************************************************************************/
 void CInfoProgressCtrl::SetRange(short nLower, short nUpper)
 {
+	OutputDebugLog(_T("CInfoProgressCtrl::SetRange(%hd, %hd) called.\n"), nLower, nUpper);
 	int min = m_rangeMin;
 	int max = m_rangeMax;
+	OutputDebugLog(_T("CInfoProgressCtrl::SetRange: min = %d, max = %d\n"), min, max);
 
 	m_rangeMin = nLower;
 	m_rangeMax = nUpper;
+	OutputDebugLog(_T("CInfoProgressCtrl::SetRange: m_rangeMin = %d, m_rangeMax = %d\n"), m_rangeMin, m_rangeMax);
 
 	CProgressCtrl::SetRange(nLower, nUpper);
+	OutputDebugLog(_T("CInfoProgressCtrl::SetRange CProgressCtrl::SetRange(%hd, %hd) done.\n"), nLower, nUpper);
+
 	if (!m_smoothMove) {
+		OutputDebugLog(_T("CInfoProgressCtrl::SetRange: Calling InstantSetPos()\n"));
 		InstantSetPos();
+		OutputDebugLog(_T("CInfoProgressCtrl::SetRange: InstantSetPos() done.\n"));
 	}
 	m_previousMin = min;
 	m_previousMax = max;
+	OutputDebugLog(_T("CInfoProgressCtrl::SetRange: m_previousMin: %d, m_previousMax: %d\n"), m_previousMin, m_previousMax);
 }
 
 /****************************************************************************
@@ -318,29 +329,43 @@ int CInfoProgressCtrl::SetPos(int nPos)
   Return: 直前のプログレスバーの位置
 ****************************************************************************/
 int CInfoProgressCtrl::InstantSetPos() {
-	if (m_previousPos == m_pos && m_previousMin == m_rangeMin && m_previousMax == m_rangeMax && m_previousState == m_state)
+	OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos called.\n"));
+	if (m_previousPos == m_pos && m_previousMin == m_rangeMin && m_previousMax == m_rangeMax && m_previousState == m_state) {
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos no update required. return %d.\n"), m_pos);
 		return m_pos;	// 更新不要
+	}
 	m_previousPos = m_pos;
 	m_previousMin = m_rangeMin;
 	m_previousMax = m_rangeMax;
 	m_previousState = m_state;
+	OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos m_previousPos=%d, m_previousMin=%d, m_previousMax=%d, m_previousState=%d\n"),
+		m_previousPos, m_previousMin, m_previousMax, m_previousState);
 
 	int ret;
 	if (m_pos >= m_rangeMax) {
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos m_pos(%d) >= m_rangeMax(%d)\n"), m_pos, m_rangeMax);
 		CProgressCtrl::SetRange32(m_rangeMin, m_pos + 1);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetRange32(%d, %d) done.\n"), m_rangeMin, m_pos + 1);
 		ret = CProgressCtrl::SetPos(m_pos + 1);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetPos(%d) done. ret:%d\n"), m_pos + 1, ret);
 		CProgressCtrl::SetPos(m_pos);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetPos(%d) done.\n"), m_pos);
 		CProgressCtrl::SetRange32(m_rangeMin, m_rangeMax);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetRange32(%d, %d) done.\n"), m_rangeMin, m_rangeMax);
 	}
 	else {
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos m_pos(%d) < m_rangeMax(%d)\n"), m_pos, m_rangeMax);
 		ret = CProgressCtrl::SetPos(m_pos + 1);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetPos(%d) done. ret:%d\n"), m_pos + 1, ret);
 		CProgressCtrl::SetPos(m_pos);
+		OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos CProgressCtrl::SetPos(%d) done.\n"), m_pos);
 	}
 
 	if (m_rangeMin > m_pos)
 		m_pos = m_rangeMin;
 	if (m_rangeMax < m_pos)
 		m_pos = m_rangeMax;
-
+	OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos m_pos=%d\n"), m_pos);
+	OutputDebugLog(_T("CInfoProgressCtrl::InstantSetPos returning %d\n"), ret);
 	return ret;
 }

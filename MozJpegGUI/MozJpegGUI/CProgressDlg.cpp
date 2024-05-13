@@ -70,8 +70,11 @@ void CProgressDlg::Start()
 
 	try {
 		m_pSyncCPU = new CSemaphoreWithCounter(m_MaxCPU, m_MaxCPU);
+		OutputDebugLog(_T("Created m_pSyncCPU.\n"));
 		m_pSyncHDD = new CSemaphoreWithCounter(m_MaxHDD, m_MaxHDD);
+		OutputDebugLog(_T("Created m_pSyncHDD.\n"));
 		m_pSyncReadBuff = new CSemaphoreWithCounter(m_MaxReadBuff, m_MaxReadBuff);
+		OutputDebugLog(_T("Created m_pSyncReadBuff.\n"));
 	}
 	catch (...) {
 		OutputDebugLog(_T("Failed to create CSemaphoreWithCounter:"));
@@ -86,19 +89,36 @@ void CProgressDlg::Start()
 		Abort();
 		return;
 	}
+	OutputDebugLog(_T("Created semaphores\n"));
 	try {
 		m_CtrlProgressCPU.SetSmoothMove(false);
+		OutputDebugLog(_T("m_CtrlProgressCPU.SetSmoothMove completed.\n"));
 		m_CtrlProgressReadBuffer.SetSmoothMove(false);
+		OutputDebugLog(_T("m_CtrlProgressReadBuffer.SetSmoothMove completed.\n"));
 		m_CtrlProgressProgress.SetSmoothMove(false);
+		OutputDebugLog(_T("m_CtrlProgressProgress.SetSmoothMove completed.\n"));
 
 		m_EndCount = static_cast<UINT>(m_FileList.size());
 		m_CtrlProgressCPU.SetRange(0, m_MaxCPU);
+		OutputDebugLog(_T("m_CtrlProgressCPU.SetRange(0, %d) completed.\n"), m_MaxCPU);
 		m_CtrlProgressReadBuffer.SetRange(0, m_MaxReadBuff);
+		OutputDebugLog(_T("m_CtrlProgressReadBuffer.SetRange(0, %d) completed.\n"), m_MaxReadBuff);
 		m_CtrlProgressProgress.SetRange(0, m_EndCount);
+		OutputDebugLog(_T("m_CtrlProgressProgress.SetRange(0, %d) completed.\n"), m_EndCount);
 	}
 	catch (...) {
 		OutputDebugLog(_T("Failed to set progress control property.\n"));
 		MessageBox(_T("Failed to set progress control property.\n"));
+
+		OutputDebugLog(_T("Deleting semaphores.\n"));
+		delete m_pSyncCPU;
+		m_pSyncCPU = NULL;
+		delete m_pSyncHDD;
+		m_pSyncHDD = NULL;
+		delete m_pSyncReadBuff;
+		m_pSyncReadBuff = NULL;
+		OutputDebugLog(_T("Deleted semaphores.\n"));
+
 		Abort();
 		return;
 	}
@@ -107,6 +127,8 @@ void CProgressDlg::Start()
 
 	Gdiplus::GdiplusStartupInput gdiinput;
 	Gdiplus::Status status;
+	OutputDebugLog(_T("Created GDI+ objects.\n"));
+
 	status = Gdiplus::GdiplusStartup(&m_GdiPlusToken, &gdiinput, NULL);
 	if (status != Gdiplus::Status::Ok) {
 		CString str;

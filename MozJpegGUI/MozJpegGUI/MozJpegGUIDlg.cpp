@@ -558,7 +558,12 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 
 	m_pProgressDlg->Create(IDD_PROGRESS_DIALOG);
 	m_pProgressDlg->ShowWindow(SW_SHOW);
-	m_pProgressDlg->Start();
+	try {
+		m_pProgressDlg->Start();
+	}
+	catch (...) {
+		OutputDebugLog(_T("Start() captured unrecognized expection\n"));
+	}
 }
 
 

@@ -72,14 +72,20 @@ BOOL CMozJpegGUIApp::InitInstance()
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
 	{
+		OutputDebugLog(_T("MozJpegDlg closed with IDOK\n"));
 	}
 	else if (nResponse == IDCANCEL)
 	{
+		OutputDebugLog(_T("MozJpegDlg closed with IDCANCEL\n"));
 	}
 	else if (nResponse == -1)
 	{
 		TRACE(traceAppMsg, 0, "警告: ダイアログの作成に失敗しました。アプリケーションは予期せずに終了します。\n");
 		TRACE(traceAppMsg, 0, "警告: ダイアログで MFC コントロールを使用している場合、#define _AFX_NO_MFC_CONTROLS_IN_DIALOGS を指定できません。\n");
+		OutputDebugLog(_T("MozJpegDlg failed to create dialog\n"));
+	}
+	else {
+		OutputDebugLog(_T("MozJpegDlg closed in unexpected condition.\n"));
 	}
 
 	// 上で作成されたシェル マネージャーを削除します。

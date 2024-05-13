@@ -4,7 +4,7 @@
 CSemaphoreWithCounter::CSemaphoreWithCounter(LONG lInitialCount, LONG lmaxCount, LPCTSTR pstrName, LPSECURITY_ATTRIBUTES lpsaAttributes)
 	:CSemaphore(lInitialCount, lmaxCount, pstrName, lpsaAttributes), m_count(0)
 {
-
+	OutputDebugLog(_T("Creating semaphoreWithCounter\n"));
 }
 
 // this function is not called by CMultiLock due to Microsoft's MFC implementation
