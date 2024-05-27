@@ -1,9 +1,9 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.5
-    File name: MozJpegGUI_1_5_x64_Global.zip
+      Version: 1.7
+    File name: MozJpegGUI_1_7_x64_Global.zip
        Author: Dona
-  Verified OS: Windows10 Professional
+  Verified OS: Windows11 Professional
    Minimum OS: Windows10 and later
   Compression: Zip
 Software type: Freeware
@@ -44,6 +44,10 @@ Copyright(c) 2024 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push "Clear" button, and start again from b).
 
 6. History
+ Ver. 1.7:
+  1. Fixed bug: MozJpegGUI suddenly closes on starting conversion on non-AVX512 CPU.
+ Ver. 1.6:
+  skipped due to bug
  Ver. 1.5:
   1. The software will log detailed information by adding following line beneath [Common] in file: MozJpegGUI.ini
      Output debug log=1
