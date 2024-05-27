@@ -90,22 +90,38 @@ English:
     the software inherites their licenses as shown in license.md.
 
 Japanese:
-     { \ t g E F A ̊e t @ C   ̒  쌠 ́A  ҂ɑ    ܂  B
+    本ソフトウェアの各ファイルの著作権は、作者に属します。
     
-     { \ t g E F A ́A   쌠 ҂   уR   g   r   [ ^ [ ɂ   āu    ̂܂܁v
- @ @ 񋟂   Ă   A     َ    킸 A   ƓI Ȏg p \   A    ѓ   ̖ړI  
- @ @ ΂   K     Ɋւ   Öق̕ۏ؂ ܂߁A ܂     Ɍ  肳  Ȃ  A     Ȃ 
- @ @ ۏ؂    ܂   B   쌠 ҂ R   g   r   [ ^ [  A   R ̂       킸 A
- @ @   Q     ̌           킸 A   ӔC ̍      _  ł  邩   i ӔC ł  邩
- @ @ i ߎ    ̑  ́j s @ s ׂł  邩   킸 A   ɂ  ̂悤 ȑ  Q          
- @ @ \    m 炳  Ă    Ƃ  Ă A { \ t g E F A ̎g p ɂ   Ĕ        i   
- @ @ i ܂  ͑ p T [ r X ̒  B A g p ̑r   A f [ ^ ̑r   A   v ̑r   A Ɩ   
- @ @   f  ܂߁A ܂     Ɍ  肳  Ȃ  j   ڑ  Q A Ԑڑ  Q A    I ȑ  Q A    
- @ @   Q A     I   Q A ܂  ͌  ʑ  Q ɂ  āA  ؐӔC 𕉂 Ȃ   ̂Ƃ  ܂  B 
+    本ソフトウェアは、著作権者およびコントリビューターによって「現状のまま」
+　　提供されており、明示黙示を問わず、商業的な使用可能性、および特定の目的に
+　　対する適合性に関する暗黙の保証も含め、またそれに限定されない、いかなる
+　　保証もありません。著作権者もコントリビューターも、事由のいかんを問わず、
+　　損害発生の原因いかんを問わず、かつ責任の根拠が契約であるか厳格責任であるか
+　　（過失その他の）不法行為であるかを問わず、仮にそのような損害が発生する
+　　可能性を知らされていたとしても、本ソフトウェアの使用によって発生した（代替
+　　品または代用サービスの調達、使用の喪失、データの喪失、利益の喪失、業務の
+　　中断も含め、またそれに限定されない）直接損害、間接損害、偶発的な損害、特別
+　　損害、懲罰的損害、または結果損害について、一切責任を負わないものとします。 
     
- @ @ { \ t g E F A  Independent JPEG Group ̐  ʂ̈ꕔ  g p   Ă   ܂  B
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+    OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+    EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
- @ @ { \ t g E F A  mozjpeg Alibpng Azlib ̊e   C u      g p   Ă   ܂  B
- @ @   ̂  ߁Alicense.md ɋL ڂ̏    e   C u         ɂ  Čp     ܂  B
+　　本ソフトウェアはIndependent JPEG Groupの成果の一部を使用しております。
 
+    This software is based in part on the work of the Independent JPEG Group.
 
+　　本ソフトウェアはmozjpeg、libpng、zlibの各ライブラリを使用しております。
+　　そのため、license.mdに記載の条項を各ライブラリ部分について継承します。
+
+    As this software uses mozjpeg, libpng and zlib libraries, sub-module of
+    the software inherites their licenses as shown in license.md.
+　
