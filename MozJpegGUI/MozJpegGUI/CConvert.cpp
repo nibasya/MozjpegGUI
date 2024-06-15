@@ -102,7 +102,7 @@ UINT CConvert::Main()
 			m_InData = NULL;
 			m_OutSize = m_InSize;
 		}
-		if(!isSrcJpg){
+		if((!isSrcJpg) && (m_MetaCount != 0)){
 			if (!WriteMetadata()) {
 				_RPTFT0(_T("Aborting from WriteMetadata()\n"));
 				throw EConvertError::EIgnore;
@@ -582,15 +582,17 @@ bool CConvert::ReadMetadata()
 			ErrorHelper(_T("Failed to get metadata size\n"), IDS_ERR_FAILED_TO_GET_METADATA_SIZE, _T("IDS_ERR_FAILED_TO_GET_METADATA_SIZE"), m_Outputname);
 			throw EConvertError::EIgnore;
 		}
-		m_pMetadata = (PropertyItem*)malloc(size);
-		if (m_pMetadata == NULL) {
-			ErrorHelper(_T("Not enough memory for metadata\n"), IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA, _T("IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA"), m_Outputname);
-			throw EConvertError::EIgnore;
-		}
-		stat = pBmp->GetAllPropertyItems(size, m_MetaCount, m_pMetadata);
-		if (stat != Status::Ok) {
-			ErrorHelper(_T("Failed to read metadata\n"), IDS_ERR_FAILED_TO_READ_METADATA, _T("IDS_ERR_FAILED_TO_READ_METADATA"), m_Outputname);
-			throw EConvertError::EIgnore;
+		if (m_MetaCount != 0) {
+			m_pMetadata = (PropertyItem*)malloc(size);
+			if (m_pMetadata == NULL) {
+				ErrorHelper(_T("Not enough memory for metadata\n"), IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA, _T("IDS_ERR_NOT_ENOUGH_MEMORY_FOR_METADATA"), m_Outputname);
+				throw EConvertError::EIgnore;
+			}
+			stat = pBmp->GetAllPropertyItems(size, m_MetaCount, m_pMetadata);
+			if (stat != Status::Ok) {
+				ErrorHelper(_T("Failed to read metadata\n"), IDS_ERR_FAILED_TO_READ_METADATA, _T("IDS_ERR_FAILED_TO_READ_METADATA"), m_Outputname);
+				throw EConvertError::EIgnore;
+			}
 		}
 	}
 	catch (EConvertError) {
