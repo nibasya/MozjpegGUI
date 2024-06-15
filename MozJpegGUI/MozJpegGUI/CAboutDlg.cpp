@@ -104,8 +104,8 @@ CString CAboutDlg::GetAppVersion()
 			throw CString(TEXT("Failed  to query product name info int GetAppVersion"));
 		}
 
-		buff.Format(TEXT("%s Version %d.%d"), pPrNm,
-			HIWORD(pFileInfo->dwProductVersionMS), LOWORD(pFileInfo->dwProductVersionMS));
+		buff.Format(TEXT("%s Version %d.%d.%d"), pPrNm,
+			HIWORD(pFileInfo->dwProductVersionMS), LOWORD(pFileInfo->dwProductVersionMS), HIWORD(pFileInfo->dwProductVersionLS));
 
 		delete[] pVer;
 		pVer = NULL;
