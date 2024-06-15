@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.7
-    File name: MozJpegGUI_1_7_x64_Global.zip
+      Version: 1.8.0
+    File name: MozJpegGUI_1_8_0_x64_Global.zip
        Author: Dona
   Verified OS: Windows11 Professional
    Minimum OS: Windows10 and later
@@ -44,6 +44,10 @@ Copyright(c) 2024 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push "Clear" button, and start again from b).
 
 6. History
+ Ver. 1.8.0:
+  1. Fixed bug: If there is no metadata (ex. bitmap file), it stops converting with an error message box.
+  2. Added function: Limit number of the CPU cores to be used. Might be good to limit the amount of consumed memory.
+  3. Added 3rd digit of the version: it will be incremented if the change is very small bugfix.
  Ver. 1.7:
   1. Fixed bug: MozJpegGUI suddenly closes on starting conversion on non-AVX512 CPU.
  Ver. 1.6:
@@ -63,7 +67,7 @@ Copyright(c) 2024 Dona All rights reserved.
   1. Added functionality to save the images into the save folder as the original one.
   2. Fixed issue: Some texts in the GUI was hidden.
  Ver. 1.2:
-  1. Fixed bug: If filename includes empty space, the software failes to write in correct filename
+  1. Fixed bug: If filename includes empty space, the software fails to write in correct filename
  Ver. 1.1:
   1. The software now shows error message instead of shutting down itself when an error has happened in mozjpeg.
   2. The software now can read .BMP files which is stored in top-down style; which is very rare.
