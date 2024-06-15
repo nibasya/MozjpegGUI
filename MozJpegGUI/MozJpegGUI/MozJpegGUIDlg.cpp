@@ -54,6 +54,8 @@ void CMozJpegGUIDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_COPY_IF_SMALLER, m_CtrlCheckCopyIfSmaller);
 	DDX_Control(pDX, IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER, m_CtrlCheckSaveToOriginalFolder);
 	DDX_Control(pDX, IDC_BUTTON_SAVETO, m_CtrlButtonSaveTo);
+	DDX_Control(pDX, IDC_CHECK_CPULIMIT, m_CtrlCheckCpuLimit);
+	DDX_Control(pDX, IDC_EDIT_CPULIMIT, m_CtrlEditCpuLimit);
 }
 
 BEGIN_MESSAGE_MAP(CMozJpegGUIDlg, CDialogEx)
@@ -72,6 +74,7 @@ BEGIN_MESSAGE_MAP(CMozJpegGUIDlg, CDialogEx)
 	ON_CBN_CLOSEUP(IDC_COMBO_SETTING, &CMozJpegGUIDlg::OnCbnCloseupComboSetting)
 	ON_CBN_DROPDOWN(IDC_COMBO_SETTING, &CMozJpegGUIDlg::OnCbnDropdownComboSetting)
 	ON_BN_CLICKED(IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER, &CMozJpegGUIDlg::OnBnClickedCheckSaveToOriginalFolder)
+	ON_BN_CLICKED(IDC_CHECK_CPULIMIT, &CMozJpegGUIDlg::OnBnClickedCheckCpulimit)
 END_MESSAGE_MAP()
 
 
@@ -539,11 +542,23 @@ void CMozJpegGUIDlg::OnBnClickedButtonConvert()
 	GetNativeSystemInfo(&sysInfo);
 	m_pProgressDlg->m_MaxCPU = sysInfo.dwNumberOfProcessors;
 	OutputDebugLog(_T("Detected num of CPU: %d\n"), m_pProgressDlg->m_MaxCPU);
+
+	if (m_CtrlCheckCpuLimit.GetCheck() == BST_CHECKED) {
+		CString buff;
+		m_CtrlEditCpuLimit.GetWindowText(buff);
+		if (buff.GetLength() > 0) {
+			int cpu = _ttoi(buff);
+			if (cpu < (int)m_pProgressDlg->m_MaxCPU) {
+				m_pProgressDlg->m_MaxCPU = cpu;
+			}
+		}
+	}
+
 	if (m_pProgressDlg->m_MaxCPU < 1) {
 		CString msg;
-		msg.Format(_T("Number of CPU is detected as %d, which is below 1. Setting it to 2."), m_pProgressDlg->m_MaxCPU);
+		msg.Format(_T("Number of CPU is set as %d, which is below 1. Setting it to 1."), m_pProgressDlg->m_MaxCPU);
 		MessageBox(msg);
-		m_pProgressDlg->m_MaxCPU = 2;
+		m_pProgressDlg->m_MaxCPU = 1;
 		OutputDebugLog(_T("Num of CPU modified to: %d\n"), m_pProgressDlg->m_MaxCPU);
 	}
 	m_pProgressDlg->m_MaxReadBuff = m_pProgressDlg->m_MaxCPU * 2;
@@ -627,6 +642,8 @@ void CMozJpegGUIDlg::CreateInitialSettingSub(int num)
 	p->WriteProfileString(sec, _T("Output Directory"), _T(""));
 	p->WriteProfileInt(sec, _T("Overwrite"), 0);
 	p->WriteProfileInt(sec, _T("Copy file if original is smaller"), 0);
+	p->WriteProfileInt(sec, _T("CPU limit"), 0);
+	p->WriteProfileString(sec, _T("CPU limit number"), _T(""));
 }
 
 
@@ -656,6 +673,9 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingLoad()
 	m_CtrlCheckOverwrite.SetCheck(p->GetProfileInt(sec, _T("Overwrite"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	m_CtrlCheckCopyIfSmaller.SetCheck(p->GetProfileInt(sec, _T("Copy file if original is smaller"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
 	m_CtrlCheckSaveToOriginalFolder.SetCheck(p->GetProfileInt(sec, _T("Save to original folder"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
+	m_CtrlCheckCpuLimit.SetCheck(p->GetProfileInt(sec, _T("CPU limit"), 0) == 0 ? BST_UNCHECKED : BST_CHECKED);
+	m_CtrlEditCpuLimit.SetWindowText(p->GetProfileString(sec, _T("CPU limit number"), _T("")));
+	OnBnClickedCheckCpulimit();
 	OnBnClickedCheckSaveToOriginalFolder();
 	m_CurrentSetting = m_SelectedSetting;
 }
@@ -693,6 +713,9 @@ void CMozJpegGUIDlg::OnBnClickedButtonSettingSave()
 	p->WriteProfileInt(sec, _T("Overwrite"), m_CtrlCheckOverwrite.GetCheck() != BST_UNCHECKED ? 1 : 0);
 	p->WriteProfileInt(sec, _T("Copy file if original is smaller"), m_CtrlCheckCopyIfSmaller.GetCheck() != BST_UNCHECKED ? 1 : 0);
 	p->WriteProfileInt(sec, _T("Save to original folder"), m_CtrlCheckSaveToOriginalFolder.GetCheck() != BST_UNCHECKED ? 1 : 0);
+	p->WriteProfileInt(sec, _T("CPU limit"), m_CtrlCheckCpuLimit.GetCheck() != BST_UNCHECKED ? 1 : 0);
+	m_CtrlEditCpuLimit.GetWindowText(buff);
+	p->WriteProfileString(sec, _T("CPU limit number"), buff);
 }
 
 
@@ -712,6 +735,8 @@ void CMozJpegGUIDlg::OnBnClickedButtonInitialize()
 	m_CtrlEditSaveTo.SetWindowText(_T(""));
 	m_CtrlCheckOverwrite.SetCheck(BST_UNCHECKED);
 	m_CtrlCheckCopyIfSmaller.SetCheck(BST_UNCHECKED);
+	m_CtrlCheckCpuLimit.SetCheck(BST_UNCHECKED);
+	m_CtrlEditCpuLimit.SetWindowText(_T(""));
 }
 
 
@@ -922,6 +947,12 @@ void CMozJpegGUIDlg::InitGUI()
 		OutputDebugString(_T("Failed to load resource: IDS_SAVE_TO_ORIGINAL_FOLDER\n"));
 	}
 	VERIFY(m_CtrlToolTip.AddTool(GetDlgItem(IDC_CHECK_SAVE_TO_ORIGINAL_FOLDER), str));
+
+	if (!str.LoadString(IDS_CPU_LIMIT_NUM)) {
+		OutputDebugString(_T("Failed to load resource: IDS_CPU_LIMIT_NUM\n"));
+	}
+	VERIFY(m_CtrlToolTip.AddTool(GetDlgItem(IDC_CHECK_CPULIMIT), str));
+	VERIFY(m_CtrlToolTip.AddTool(GetDlgItem(IDC_EDIT_CPULIMIT), str));
 }
 
 
@@ -1061,5 +1092,16 @@ void CMozJpegGUIDlg::OnBnClickedCheckSaveToOriginalFolder()
 	else {
 		m_CtrlEditSaveTo.EnableWindow(TRUE);
 		m_CtrlButtonSaveTo.EnableWindow(TRUE);
+	}
+}
+
+
+void CMozJpegGUIDlg::OnBnClickedCheckCpulimit()
+{
+	if (m_CtrlCheckCpuLimit.GetCheck() == BST_CHECKED) {
+		m_CtrlEditCpuLimit.EnableWindow(TRUE);
+	}
+	else {
+		m_CtrlEditCpuLimit.EnableWindow(FALSE);
 	}
 }

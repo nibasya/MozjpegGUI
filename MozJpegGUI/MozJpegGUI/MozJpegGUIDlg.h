@@ -56,6 +56,8 @@ public:
 	CButton m_CtrlCheckTrellisOptimization;
 	CButton m_CtrlCheckTrellisOptimizationOfDCCoefficients;
 	CComboBox m_CtrlComboTuneTrellisOptimization;
+	CButton m_CtrlCheckCpuLimit;
+	CEdit m_CtrlEditCpuLimit;
 
 	// misc. controls
 	CButton m_CtrlButtonInitialize;	// Initialize convertion setting
@@ -75,8 +77,6 @@ public:
 	// support functions
 	void ReadSetting();
 	void SaveSetting();
-	void ReadConvertSetting(int num);
-	void SaveConvertSetting(int num);
 	int InitSettingCombo();
 	void InitGUI();
 	void CreateInitialSetting();
@@ -97,4 +97,5 @@ public:
 	afx_msg void OnCbnCloseupComboSetting();
 	afx_msg void OnCbnDropdownComboSetting();
 	afx_msg void OnBnClickedCheckSaveToOriginalFolder();
+	afx_msg void OnBnClickedCheckCpulimit();
 };
