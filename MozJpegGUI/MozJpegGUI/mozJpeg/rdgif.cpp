@@ -50,7 +50,7 @@ typedef unsigned char U_CHAR;
 
 
 #define MAXCOLORMAPSIZE  256    /* max # of colors in a GIF colormap */
-#define NUMCOLORS        3      /* # of colors */
+#define GIF_NUMCOLORS        3      /* # of colors */
 #define CM_RED           0      /* color component numbers */
 #define CM_GREEN         1
 #define CM_BLUE          2
@@ -430,7 +430,7 @@ start_input_gif(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
     /* Allocate space to store the colormap */
     source->colormap = (*cinfo->mem->alloc_sarray)
         ((j_common_ptr)cinfo, JPOOL_IMAGE, (JDIMENSION)MAXCOLORMAPSIZE,
-            (JDIMENSION)NUMCOLORS);
+            (JDIMENSION)GIF_NUMCOLORS);
     colormaplen = 0;              /* indicate initialization */
 
     /* Read global colormap if header indicates it is present */
@@ -528,7 +528,7 @@ start_input_gif(j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
 
     if (cinfo->in_color_space != JCS_GRAYSCALE) {
         cinfo->in_color_space = JCS_RGB;
-        cinfo->input_components = NUMCOLORS;
+        cinfo->input_components = GIF_NUMCOLORS;
     }
 
     /* Create compressor input buffer. */
