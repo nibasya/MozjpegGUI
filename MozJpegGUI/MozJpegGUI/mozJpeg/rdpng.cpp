@@ -41,7 +41,7 @@ jinit_read_png(j_compress_ptr cinfo)
 
 METHODDEF(void) error_input_png(png_structp png_ptr, png_const_charp msg) {
     j_compress_ptr cinfo = static_cast<j_compress_ptr>(png_get_error_ptr(png_ptr));
-    ERREXITS(cinfo, JERR_PNG_ERROR, msg);
+    ERREXITS(cinfo, JERR_PNG_ERROR, CA2CT(msg));
 }
 
 /* This is a small ICC profile for sRGB */
