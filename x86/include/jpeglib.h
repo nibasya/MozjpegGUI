@@ -787,7 +787,7 @@ struct jpeg_error_mgr {
 #define JMSG_STR_PARM_MAX  80
   union {
     int i[8];
-    TCHAR s[JMSG_STR_PARM_MAX];
+    char s[JMSG_STR_PARM_MAX];
   } msg_parm;
 
   /* Standard state variables for error facility */

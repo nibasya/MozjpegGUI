@@ -272,7 +272,7 @@ JMESSAGE(JERR_BAD_DROP_SAMPLING,
 #define ERREXITS(cinfo, code, str) \
   ((cinfo)->err->msg_code = (code), \
    _tcsncpy_s((cinfo)->err->msg_parm.s, JMSG_STR_PARM_MAX - 1, (str), JMSG_STR_PARM_MAX), \
-   (cinfo)->err->msg_parm.s[JMSG_STR_PARM_MAX - 1] = _T('\0'), \
+   (cinfo)->err->msg_parm.s[JMSG_STR_PARM_MAX - 1] = '\0', \
    (*(cinfo)->err->error_exit) ((j_common_ptr)(cinfo)))
 
 #define MAKESTMT(stuff)         do { stuff } while (0)
