@@ -96,13 +96,13 @@ end_progress_monitor(j_common_ptr cinfo)
  */
 
 GLOBAL(boolean)
-keymatch(char *arg, const char *keyword, int minchars)
+keymatch(TCHAR *arg, const TCHAR *keyword, int minchars)
 {
   register int ca, ck;
   register int nmatched = 0;
 
-  while ((ca = *arg++) != '\0') {
-    if ((ck = *keyword++) == '\0')
+  while ((ca = *arg++) != _T('\0')) {
+    if ((ck = *keyword++) == _T('\0'))
       return FALSE;             /* arg longer than keyword, no good */
     if (isupper(ca))            /* force arg to lcase (assume ck is already) */
       ca = tolower(ca);

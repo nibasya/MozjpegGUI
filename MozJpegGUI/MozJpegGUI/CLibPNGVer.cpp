@@ -5,7 +5,7 @@
 
 CString CLibPNGVer::GetLibPNGVer()
 {
-	return CString(_T(PNG_HEADER_VERSION_STRING));
+	return CString(PNG_HEADER_VERSION_STRING);
 }
 
 CString CLibPNGVer::GetZLibVer()

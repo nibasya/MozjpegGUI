@@ -128,13 +128,13 @@ EXTERN(djpeg_dest_ptr) jinit_write_targa(j_decompress_ptr cinfo);
 
 /* cjpeg support routines (in rdswitch.c) */
 
-EXTERN(boolean) read_quant_tables(j_compress_ptr cinfo, char *filename,
+EXTERN(boolean) read_quant_tables(j_compress_ptr cinfo, TCHAR *filename,
                                   boolean force_baseline);
-EXTERN(boolean) read_scan_script(j_compress_ptr cinfo, char *filename);
-EXTERN(boolean) set_quality_ratings(j_compress_ptr cinfo, char *arg,
+EXTERN(boolean) read_scan_script(j_compress_ptr cinfo, TCHAR *filename);
+EXTERN(boolean) set_quality_ratings(j_compress_ptr cinfo, TCHAR *arg,
                                     boolean force_baseline);
-EXTERN(boolean) set_quant_slots(j_compress_ptr cinfo, char *arg);
-EXTERN(boolean) set_sample_factors(j_compress_ptr cinfo, char *arg);
+EXTERN(boolean) set_quant_slots(j_compress_ptr cinfo, TCHAR *arg);
+EXTERN(boolean) set_sample_factors(j_compress_ptr cinfo, TCHAR *arg);
 
 /* djpeg support routines (in rdcolmap.c) */
 
@@ -145,7 +145,7 @@ EXTERN(void) read_color_map(j_decompress_ptr cinfo, FILE *infile);
 EXTERN(void) start_progress_monitor(j_common_ptr cinfo,
                                     cd_progress_ptr progress);
 EXTERN(void) end_progress_monitor(j_common_ptr cinfo);
-EXTERN(boolean) keymatch(char *arg, const char *keyword, int minchars);
+EXTERN(boolean) keymatch(TCHAR *arg, const TCHAR *keyword, int minchars);
 EXTERN(FILE *) read_stdin(void);
 EXTERN(FILE *) write_stdout(void);
 
@@ -155,8 +155,8 @@ EXTERN(FILE *) write_stdout(void);
 #define READ_BINARY     "r"
 #define WRITE_BINARY    "w"
 #else
-#define READ_BINARY     "rb"
-#define WRITE_BINARY    "wb"
+#define READ_BINARY     _T("rb")
+#define WRITE_BINARY    _T("wb")
 #endif
 
 #ifndef EXIT_FAILURE            /* define exit() codes if not provided */

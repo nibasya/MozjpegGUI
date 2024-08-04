@@ -1,5 +1,5 @@
 /* libjpeg-turbo build number */
-#define BUILD  "20231203"
+#define BUILD  _T("20231203")
 
 /* Compiler's inline keyword */
 #undef inline
@@ -11,10 +11,10 @@
 //#define THREAD_LOCAL  __declspec(thread)
 
 /* Define to the full name of this package. */
-#define PACKAGE_NAME  "mozjpeg"
+#define PACKAGE_NAME  _T("mozjpeg")
 
 /* Version number of package */
-#define VERSION  "4.1.1"
+#define VERSION  _T("4.1.1")
 
 /* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T  8

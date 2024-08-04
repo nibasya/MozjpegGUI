@@ -79,7 +79,7 @@ static int q_scale_factor[NUM_QUANT_TBLS] = {100, 100, 100, 100};
 #endif
 
 GLOBAL(boolean)
-read_quant_tables(j_compress_ptr cinfo, char *filename, boolean force_baseline)
+read_quant_tables(j_compress_ptr cinfo, TCHAR *filename, boolean force_baseline)
 /* Read a set of quantization tables from the specified file.
  * The file is plain ASCII text: decimal numbers with whitespace between.
  * Comments preceded by '#' may be included in the file.
@@ -95,23 +95,23 @@ read_quant_tables(j_compress_ptr cinfo, char *filename, boolean force_baseline)
   long val;
   unsigned int table[DCTSIZE2];
 
-  fopen_s(&fp, filename, "r");
+  _tfopen_s(&fp, filename, _T("r"));
   if (fp == NULL) {
-    fprintf(stderr, "Can't open table file %s\n", filename);
+    _ftprintf(stderr, _T("Can't open table file %s\n"), filename);
     return FALSE;
   }
   tblno = 0;
 
   while (read_text_integer(fp, &val, &termchar)) { /* read 1st element of table */
     if (tblno >= NUM_QUANT_TBLS) {
-      fprintf(stderr, "Too many tables in file %s\n", filename);
+      _ftprintf(stderr, _T("Too many tables in file %s\n"), filename);
       fclose(fp);
       return FALSE;
     }
     table[0] = (unsigned int) val;
     for (i = 1; i < DCTSIZE2; i++) {
       if (! read_text_integer(fp, &val, &termchar)) {
-        fprintf(stderr, "Invalid table data in file %s\n", filename);
+        _ftprintf(stderr, _T("Invalid table data in file %s\n"), filename);
         fclose(fp);
         return FALSE;
       }
@@ -128,7 +128,7 @@ read_quant_tables(j_compress_ptr cinfo, char *filename, boolean force_baseline)
   }
 
   if (termchar != EOF) {
-    fprintf(stderr, "Non-numeric data in file %s\n", filename);
+    _ftprintf(stderr, _T("Non-numeric data in file %s\n"), filename);
     fclose(fp);
     return FALSE;
   }
@@ -170,7 +170,7 @@ read_scan_integer (FILE *file, long *result, int *termchar)
 
 
 GLOBAL(boolean)
-read_scan_script (j_compress_ptr cinfo, char *filename)
+read_scan_script (j_compress_ptr cinfo, TCHAR *filename)
 /* Read a scan script from the specified text file.
  * Each entry in the file defines one scan to be emitted.
  * Entries are separated by semicolons ';'.
@@ -194,9 +194,9 @@ read_scan_script (j_compress_ptr cinfo, char *filename)
 #define MAX_SCANS  100          /* quite arbitrary limit */
   jpeg_scan_info scans[MAX_SCANS];
 
-  fopen_s(&fp, filename, "r");
+  _tfopen_s(&fp, filename, _T("r"));
   if (fp == NULL) {
-    fprintf(stderr, "Can't open scan definition file %s\n", filename);
+    _ftprintf(stderr, _T("Can't open scan definition file %s\n"), filename);
     return FALSE;
   }
   scanptr = scans;
@@ -204,7 +204,7 @@ read_scan_script (j_compress_ptr cinfo, char *filename)
 
   while (read_scan_integer(fp, &val, &termchar)) {
     if (scanno >= MAX_SCANS) {
-      fprintf(stderr, "Too many scans defined in file %s\n", filename);
+      _ftprintf(stderr, _T("Too many scans defined in file %s\n"), filename);
       fclose(fp);
       return FALSE;
     }
@@ -212,7 +212,7 @@ read_scan_script (j_compress_ptr cinfo, char *filename)
     ncomps = 1;
     while (termchar == ' ') {
       if (ncomps >= MAX_COMPS_IN_SCAN) {
-        fprintf(stderr, "Too many components in one scan in file %s\n",
+        _ftprintf(stderr, _T("Too many components in one scan in file %s\n"),
                 filename);
         fclose(fp);
         return FALSE;
@@ -245,7 +245,7 @@ read_scan_script (j_compress_ptr cinfo, char *filename)
     }
     if (termchar != ';' && termchar != EOF) {
 bogus:
-      fprintf(stderr, "Invalid scan entry format in file %s\n", filename);
+      _ftprintf(stderr, _T("Invalid scan entry format in file %s\n"), filename);
       fclose(fp);
       return FALSE;
     }
@@ -253,7 +253,7 @@ bogus:
   }
 
   if (termchar != EOF) {
-    fprintf(stderr, "Non-numeric data in file %s\n", filename);
+    _ftprintf(stderr, _T("Non-numeric data in file %s\n"), filename);
     fclose(fp);
     return FALSE;
   }
@@ -521,7 +521,7 @@ jpeg_default_qtables (j_compress_ptr cinfo, boolean force_baseline)
 
 
 GLOBAL(boolean)
-set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
+set_quality_ratings (j_compress_ptr cinfo, TCHAR *arg, boolean force_baseline)
 /* Process a quality-ratings parameter string, of the form
  *     N[,N,...]
  * If there are more q-table slots than parameters, the last value is replicated.
@@ -529,14 +529,14 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
 {
   float val = 75.f;                 /* default value */
   int tblno;
-  char ch;
+  TCHAR ch;
 
   for (tblno = 0; tblno < NUM_QUANT_TBLS; tblno++) {
     if (*arg) {
-      ch = ',';                 /* if not set by sscanf, will be ',' */
-      if (sscanf_s(arg, "%f%c", &val, &ch, 1) < 1)
+      ch = _T(',');                 /* if not set by sscanf, will be ',' */
+      if (_stscanf_s(arg, _T("%f%c"), &val, &ch, 1) < 1)
         return FALSE;
-      if (ch != ',')            /* syntax check */
+      if (ch != _T(','))            /* syntax check */
         return FALSE;
       /* Convert user 0-100 rating to percentage scaling */
 #if JPEG_LIB_VERSION >= 70
@@ -544,7 +544,7 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
 #else
       q_scale_factor[tblno] = static_cast<int>(jpeg_float_quality_scaling(val));
 #endif
-      while (*arg && *arg++ != ','); /* advance to next segment of arg
+      while (*arg && *arg++ != _T(',')); /* advance to next segment of arg
                                         string */
     } else {
       /* reached end of parameter, set remaining factors to last value */
@@ -562,9 +562,9 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
      To make the quality setting more intuitive, disable subsampling when high-quality
      color is desired. */
   if (val >= 90) {
-    set_sample_factors(cinfo, "1x1");
+    set_sample_factors(cinfo, _T("1x1"));
   } else if (val >= 80) {
-    set_sample_factors(cinfo, "2x1");
+    set_sample_factors(cinfo, _T("2x1"));
   }
 
   return TRUE;
@@ -572,7 +572,7 @@ set_quality_ratings (j_compress_ptr cinfo, char *arg, boolean force_baseline)
 
 
 GLOBAL(boolean)
-set_quant_slots (j_compress_ptr cinfo, char *arg)
+set_quant_slots (j_compress_ptr cinfo, TCHAR *arg)
 /* Process a quantization-table-selectors parameter string, of the form
  *     N[,N,...]
  * If there are more components than parameters, the last value is replicated.
@@ -580,14 +580,14 @@ set_quant_slots (j_compress_ptr cinfo, char *arg)
 {
   int val = 0;                  /* default table # */
   int ci;
-  char ch;
+  TCHAR ch;
 
   for (ci = 0; ci < MAX_COMPONENTS; ci++) {
     if (*arg) {
-      ch = ',';                 /* if not set by sscanf, will be ',' */
-      if (sscanf_s(arg, "%d%c", &val, &ch, 1) < 1)
+      ch = _T(',');                 /* if not set by sscanf, will be ',' */
+      if (_stscanf_s(arg, _T("%d%c"), &val, &ch, 1) < 1)
         return FALSE;
-      if (ch != ',')            /* syntax check */
+      if (ch != _T(','))            /* syntax check */
         return FALSE;
       if (val < 0 || val >= NUM_QUANT_TBLS) {
         fprintf(stderr, "JPEG quantization tables are numbered 0..%d\n",
@@ -595,7 +595,7 @@ set_quant_slots (j_compress_ptr cinfo, char *arg)
         return FALSE;
       }
       cinfo->comp_info[ci].quant_tbl_no = val;
-      while (*arg && *arg++ != ','); /* advance to next segment of arg
+      while (*arg && *arg++ != _T(',')); /* advance to next segment of arg
                                         string */
     } else {
       /* reached end of parameter, set remaining components to last table */
@@ -607,29 +607,29 @@ set_quant_slots (j_compress_ptr cinfo, char *arg)
 
 
 GLOBAL(boolean)
-set_sample_factors (j_compress_ptr cinfo, char *arg)
+set_sample_factors (j_compress_ptr cinfo, TCHAR *arg)
 /* Process a sample-factors parameter string, of the form
  *     HxV[,HxV,...]
  * If there are more components than parameters, "1x1" is assumed for the rest.
  */
 {
   int ci, val1, val2;
-  char ch1, ch2;
+  TCHAR ch1, ch2;
 
   for (ci = 0; ci < MAX_COMPONENTS; ci++) {
     if (*arg) {
-      ch2 = ',';                /* if not set by sscanf, will be ',' */
-      if (sscanf_s(arg, "%d%c%d%c", &val1, &ch1, 1, &val2, &ch2, 1) < 3)
+      ch2 = _T(',');                /* if not set by sscanf, will be ',' */
+      if (_stscanf_s(arg, _T("%d%c%d%c"), &val1, &ch1, 1, &val2, &ch2, 1) < 3)
         return FALSE;
-      if ((ch1 != 'x' && ch1 != 'X') || ch2 != ',') /* syntax check */
+      if ((ch1 != _T('x') && ch1 != _T('X')) || ch2 != _T(',')) /* syntax check */
         return FALSE;
       if (val1 <= 0 || val1 > 4 || val2 <= 0 || val2 > 4) {
-        fprintf(stderr, "JPEG sampling factors must be 1..4\n");
+        _ftprintf(stderr, _T("JPEG sampling factors must be 1..4\n"));
         return FALSE;
       }
       cinfo->comp_info[ci].h_samp_factor = val1;
       cinfo->comp_info[ci].v_samp_factor = val2;
-      while (*arg && *arg++ != ',');  /* advance to next segment of arg
+      while (*arg && *arg++ != _T(','));  /* advance to next segment of arg
                                          string */
     } else {
       /* reached end of parameter, set remaining components to 1x1 sampling */

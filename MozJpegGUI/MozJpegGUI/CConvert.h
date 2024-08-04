@@ -31,7 +31,7 @@ public:
 	bool ReadFile();
 	bool Convert();
 	bool WriteFile();
-	void CreateArgs(int* argc, void*** argv);
+	void CreateArgs(int* argc, TCHAR*** argv);
 };
 
 class CConvertLock

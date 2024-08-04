@@ -587,7 +587,7 @@ typedef const png_uint_16     * png_const_uint_16p;
 typedef png_int_16            * png_int_16p;
 typedef const png_int_16      * png_const_int_16p;
 typedef char                  * png_charp;
-typedef const char            * png_const_charp;
+typedef const TCHAR            * png_const_charp;
 typedef png_fixed_point       * png_fixed_point_p;
 typedef const png_fixed_point * png_const_fixed_point_p;
 typedef size_t                * png_size_tp;

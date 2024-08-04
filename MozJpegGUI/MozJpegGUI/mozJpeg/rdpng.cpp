@@ -87,7 +87,7 @@ start_input_png (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
     source->info_ptr = png_create_info_struct(source->png_ptr);
 
     if (!source->png_ptr || !source->info_ptr) {
-        ERREXITS(cinfo, JERR_PNG_ERROR, "Can't create read/info_struct");
+        ERREXITS(cinfo, JERR_PNG_ERROR, _T("Can't create read/info_struct"));
         return;
     }
 
@@ -103,7 +103,7 @@ start_input_png (j_compress_ptr cinfo, cjpeg_source_ptr sinfo)
                  &bit_depth, &color_type, NULL, NULL, NULL);
 
     if (width > 65535 || height > 65535) {
-        ERREXITS(cinfo, JERR_PNG_ERROR, "Image too large");
+        ERREXITS(cinfo, JERR_PNG_ERROR, _T("Image too large"));
         return;
     }
 

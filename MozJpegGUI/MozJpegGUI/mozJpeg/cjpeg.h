@@ -8,11 +8,11 @@ public:
 	CJpeg();
 	cjpeg_source_ptr select_file_type(FILE* infile);
 	void usage();
-	int parse_switches(int argc, char** argv, int last_file_arg_seen, boolean for_real);
+	int parse_switches(int argc, TCHAR** argv, int last_file_arg_seen, boolean for_real);
 	static void error_exit(j_common_ptr cinfo);
 	static void output_message(j_common_ptr cinfo);
 	static void my_emit_message(j_common_ptr cinfo, int msg_level);
-	int cjpeg_main(int argc, char** argv);
+	int cjpeg_main(int argc, TCHAR** argv);
 
 	jpeg_compress_struct m_cinfo;
 
@@ -25,9 +25,9 @@ public:
 	CSyncObject* m_pSyncAbort;
 	bool* m_Paused;
 
-	char* m_progname;    /* program name for error messages */	// const
-	char* m_icc_filename;      /* for -icc switch */
-	char* m_outfilename;       /* for -outfile switch */
+	TCHAR* m_progname;    /* program name for error messages */	// const
+	TCHAR* m_icc_filename;      /* for -icc switch */
+	TCHAR* m_outfilename;       /* for -outfile switch */
 	boolean m_memdst;                 /* for -memdst switch */
 	boolean m_report;                 /* for -report switch */
 	boolean m_strict;                 /* for -strict switch */

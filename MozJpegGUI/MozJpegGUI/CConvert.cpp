@@ -304,14 +304,14 @@ bool CConvert::Convert()
 	int argc;
 	void** argv;
 	int ret;
-	CreateArgs(&argc, &argv);
+	CreateArgs(&argc, (TCHAR***) &argv);
 	CJpeg jpeg;
 	jpeg.m_pSyncAbort = &m_pParent->m_SyncAbort;
 	jpeg.m_Paused = &m_pParent->m_Paused;
 
 	OutputDebugLog(_T("Start convertion\n"));
 
-	ret = jpeg.cjpeg_main(argc, (char**)argv);
+	ret = jpeg.cjpeg_main(argc, (TCHAR**)argv);
 
 	OutputDebugLog(_T("Completed convertion\n"));
 
@@ -503,7 +503,7 @@ DWORD CConvertLock::Unlock()
 }
 
 
-void CConvert::CreateArgs(int* argc, void*** argv)
+void CConvert::CreateArgs(int* argc, TCHAR*** argv)
 {
 	CString cmd = m_CommandOptions;
 	int curpos = 0;
@@ -523,13 +523,12 @@ void CConvert::CreateArgs(int* argc, void*** argv)
 	vec.push_back(m_Filename);
 
 	*argc = static_cast<int>(vec.size());
-	*argv = new void*[*argc];
+	*argv = new TCHAR*[*argc];
 	int i;
 
 	for (i = 0; i < *argc; i++) {
-		CStringA aBuff = CT2A(vec[i]);
-		(*argv)[i] = new char[aBuff.GetLength() + 1];
-		strcpy_s(static_cast<char *>((*argv)[i]), aBuff.GetLength()+1, aBuff);
+		(*argv)[i] = new TCHAR[vec[i].GetLength() + 1];
+		_tcscpy_s(static_cast<TCHAR *>((*argv)[i]), vec[i].GetLength() + 1, vec[i]);
 	}
 }
 
