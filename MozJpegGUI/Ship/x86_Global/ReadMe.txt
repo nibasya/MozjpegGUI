@@ -1,7 +1,7 @@
 ==========================================================================
 Software name: MozJpegGUI
-      Version: 1.8.0
-    File name: MozJpegGUI_1_8_0_x86_Global.zip
+      Version: 1.8.1
+    File name: MozJpegGUI_1_8_1_x86_Global.zip
        Author: Dona
   Verified OS: Windows11 Professional
    Minimum OS: Windows10 and later
@@ -44,6 +44,8 @@ Copyright(c) 2024 Dona All rights reserved.
  h) If you want to continue the conversion with other sets of the files, push "Clear" button, and start again from b).
 
 6. History
+ Ver. 1.8.1:
+  1. Fixed bug: The software fails to convert specific filenames.
  Ver. 1.8.0:
   1. Fixed bug: If there is no metadata (ex. bitmap file), it stops converting with an error message box.
   2. Added function: Limit number of the CPU cores to be used. Might be good to limit the amount of consumed memory.
